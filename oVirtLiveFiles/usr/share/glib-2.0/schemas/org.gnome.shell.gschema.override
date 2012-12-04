@@ -1,0 +1,3 @@
+[org.gnome.shell]
+favorite-apps=['ovirt.desktop' , 'engine-setup.desktop','firefox.desktop', 'evolution.desktop', 'empathy.desktop', 'shotwell.desktop', 'nautilus.desktop', 'anaconda.desktop']
+
