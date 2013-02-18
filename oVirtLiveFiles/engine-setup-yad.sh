@@ -8,7 +8,7 @@ sudo brctl addif ovirtmgmt dummy0 > /dev/null
 
 action=$(yad --entry \
     --title "oVirt installation" \
-    --text  "oVirt allInOne is going to be installed\nChoose which option you would like to install\nINFO: all passwords on the live system are: \"oVirt!\"" \
+    --text  "oVirt allInOne is going to be installed\nChoose which option you would like to install\nINFO: all passwords on the live system are: \"ovirt\"" \
     --on-top \
     --center\
     --text-align=center \
