@@ -8,9 +8,6 @@ sed -i 's/liveuser/oVirtuser/g' ./kickstart/ovirt-live-base.ks
 sed -i 's/firewall \-\-enabled/firewall \-\-disabled/g' ./kickstart/ovirt-live-base.ks
 sed -i 's/livedir\=\"LiveOS\"/livedir\=\"LiveoVirt\"/g' ./kickstart/ovirt-live-base.ks
 sed -i "s/\(^.*stop.*atd\..*:\)/\1\nmodprobe dummy/g" ./kickstart/ovirt-live-base.ks
-wget -N http://kojipkgs.fedoraproject.org//packages/sanlock/2.6/7.fc18/x86_64/sanlock-2.6-7.fc18.x86_64.rpm
-wget -N http://kojipkgs.fedoraproject.org//packages/sanlock/2.6/7.fc18/x86_64/sanlock-lib-2.6-7.fc18.x86_64.rpm
-wget -N http://kojipkgs.fedoraproject.org//packages/sanlock/2.6/7.fc18/x86_64/sanlock-python-2.6-7.fc18.x86_64.rpm
 wget -N http://distro.ibiblio.org/tinycorelinux/4.x/x86/release/TinyCore-current.iso
 wget -N http://download.fedoraproject.org/pub/fedora/linux/releases/18/Live/x86_64/Fedora-18-x86_64-Live-Desktop.iso
 mkdir ./oVirtLiveFiles/rpms/
