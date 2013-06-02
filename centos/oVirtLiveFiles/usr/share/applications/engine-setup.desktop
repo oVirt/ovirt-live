@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Version=1.0
+Name=oVirt-setup
+Name[en_US]=engine-setup
+Exec=/usr/bin/gnome-terminal -e "bash -c /home/liveuser/oVirtLiveFiles/engine-setup-yad.sh;bash"
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=5
+Icon=/home/rhevuser/oVirtLiveFiles/images/ovirt-icon-128.png
+

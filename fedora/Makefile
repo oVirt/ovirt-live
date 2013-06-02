@@ -46,3 +46,24 @@ iso:
 		> $(NAME)-$(VERSION)-$(RELEASE).$(SUFFIX).log 2>&1 || notify-send "Error"
 	mv $(NAME)-$(VERSION)-$(RELEASE).iso $(NAME)-$(VERSION)-$(RELEASE).$(SUFFIX).iso
 	notify-send "Check ISO"
+
+nightly-iso:
+	cp -f /usr/share/spin-kickstarts/fedora-live-base.ks kickstart/ovirt-live-base.ks
+	sed -i -e 's/selinux \-\-enforcing/selinux \-\-permissive/g' \
+            -e 's/services \-\-enabled\=NetworkManager \-\-disabled\=network\,sshd/services \-\-enabled\=NetworkManager\,sshd \-\-disabled\=network\,firewalld\nrepo \-\-name\=ovirt \-\-baseurl\=http:\/\/ovirt.org\/releases\/nightly\/rpm\/Fedora\/18/g' \
+             -e 's/liveuser/oVirtuser/g' \
+             -e 's/firewall \-\-enabled/firewall \-\-disabled/g' \
+             -e 's/livedir\=\"LiveOS\"/livedir\=\"LiveoVirt\"/g' \
+             -e "s/\(^.*stop.*atd\..*:\)/\1\nmodprobe dummy/g" kickstart/ovirt-live-base.ks
+
+	wget -N http://distro.ibiblio.org/tinycorelinux/4.x/x86/release/TinyCore-current.iso
+	mkdir oVirtLiveFiles/iso
+
+	mv -f *.iso oVirtLiveFiles/iso
+
+	livecd-creator -d -v  \
+            --config=kickstart/ovirt.ks \
+            --cache=/home \
+            --fslabel=$(NAME)-$(VERSION)-$(RELEASE) \
+		> $(NAME)-$(VERSION)-$(RELEASE).$(SUFFIX).log 2>&1
+	mv $(NAME)-$(VERSION)-$(RELEASE).iso $(NAME)-$(VERSION)-$(RELEASE).$(SUFFIX).iso

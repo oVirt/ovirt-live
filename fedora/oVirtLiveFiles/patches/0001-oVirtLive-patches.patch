@@ -1,0 +1,91 @@
+From 34ff79b34bab6b1ace4e83c5eb3c6fcec2b62538 Mon Sep 17 00:00:00 2001
+From: Ohad Basan <obasan@redhat.com>
+Date: Wed, 2 Jan 2013 11:26:18 +0200
+Subject: [PATCH] oVirtLive patches
+
+Change-Id: I6cbe56f6ce1bd62e40877b845765c8b75145f34c
+---
+ packaging/fedora/setup/common_utils.py      | 2 +-
+ packaging/fedora/setup/engine-setup.py      | 6 +++---
+ packaging/fedora/setup/engine_validators.py | 1 +
+ packaging/fedora/setup/nfsutils.py          | 1 +
+ 4 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/packaging/fedora/setup/common_utils.py b/packaging/fedora/setup/common_utils.py
+index 2507d28..e59f23f 100755
+--- a/packaging/fedora/setup/common_utils.py
++++ b/packaging/fedora/setup/common_utils.py
+@@ -1276,7 +1276,7 @@ def getRpmVersion(rpmName=basedefs.ENGINE_RPM_NAME):
+ 
+ def installed(rpm):
+     try:
+-        getRpmVersion(rpmName=rpm)
++        #getRpmVersion(rpmName=rpm)
+         return True
+     except:
+         logging.debug("getRpmVersion failed", exc_info=True)
+diff --git a/packaging/fedora/setup/engine-setup.py b/packaging/fedora/setup/engine-setup.py
+index f347e78..57382fe 100755
+--- a/packaging/fedora/setup/engine-setup.py
++++ b/packaging/fedora/setup/engine-setup.py
+@@ -675,6 +675,7 @@ def _backupOldHttpdConfig():
+ 
+ 
+ def _configureSelinuxBoolean():
++    return
+     logging.debug("Enable httpd_can_network_connect boolean")
+     cmd = [
+         basedefs.EXEC_SEMANAGE,
+@@ -1024,7 +1025,7 @@ def _upgradeDB():
+         currentDbName = basedefs.DB_NAME
+ 
+         # Update rpm version in vdc options
+-        utils.updateVDCOption("ProductRPMVersion", utils.getRpmVersion(basedefs.ENGINE_RPM_NAME))
++        #utils.updateVDCOption("ProductRPMVersion", utils.getRpmVersion(basedefs.ENGINE_RPM_NAME))
+     except:
+         # Upgrade failed! we need to restore the old db
+         logging.debug("DB upgrade failed, restoring it to a previous state. DB was backed up to %s", dbBackupFile)
+@@ -1088,7 +1089,6 @@ def _updateVDCOptions():
+             "DataDir":["/usr/share/ovirt-engine", 'text'],
+             "SignScriptName":["SignReq.sh", 'text'],
+             "OrganizationName":[controller.CONF["ORG_NAME"], 'text'],
+-            "ProductRPMVersion":[utils.getRpmVersion(basedefs.ENGINE_RPM_NAME), 'text'],
+             "AdminPassword":[controller.CONF["AUTH_PASS"], 'pass']
+         }
+     )
+@@ -1971,7 +1971,7 @@ def main(configFile=None):
+         runSequences()
+ 
+         # Lock rhevm version
+-        utils.lockRpmVersion(miniyum, basedefs.RPM_LOCK_LIST.split())
++        #utils.lockRpmVersion(miniyum, basedefs.RPM_LOCK_LIST.split())
+ 
+         # Print info
+         _addFinalInfoMsg()
+diff --git a/packaging/fedora/setup/engine_validators.py b/packaging/fedora/setup/engine_validators.py
+index 0b8f5e2..68a5b67 100644
+--- a/packaging/fedora/setup/engine_validators.py
++++ b/packaging/fedora/setup/engine_validators.py
+@@ -558,6 +558,7 @@ def _isPathWriteable(path):
+         return False
+ 
+ def validateIpaAndHttpdStatus(conf):
++    return True
+     """"
+     This function serve as a pre-condition to the ports group. This function will always return True,
+     Therefore the ports group will always be handled, but this function may changes the flow dynamically
+diff --git a/packaging/fedora/setup/nfsutils.py b/packaging/fedora/setup/nfsutils.py
+index e904f2e..65adbe5 100644
+--- a/packaging/fedora/setup/nfsutils.py
++++ b/packaging/fedora/setup/nfsutils.py
+@@ -33,6 +33,7 @@ def addNfsExport(path, authInfo, comment=None, exportFilePath=basedefs.FILE_ETC_
+         exportFile.close()
+ 
+ def setSELinuxContextForDir(path, contextName):
++    return
+     logging.debug("setting selinux context for %s" % path)
+     if path.endswith("/"):
+         path = path[:-1]
+-- 
+1.7.11.7
+

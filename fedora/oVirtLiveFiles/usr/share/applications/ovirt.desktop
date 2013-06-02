@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Version=1.0
+Name=oVirt-Engine
+Exec=/bin/firefox https://localhost.localdomain
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=10
+StartupNotify=true
+Icon=/home/oVirtuser/oVirtLiveFiles/images/ovirt-icon-128.png
+
