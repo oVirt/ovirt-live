@@ -123,8 +123,6 @@ done
 # Configuring autologin
 sed -i 's/\[daemon\]/\[daemon\]\nAutomaticLoginEnable\=True\nAutomaticLogin\=oVirtuser/g' /etc/gdm/custom.conf
 
-# Settings up vdsm to use a dummy nic
-cp /home/oVirtuser/oVirtLiveFiles/50-vdsm-conf-fake-nic.conf /etc/ovirt-host-deploy.conf.d
 echo '10.0.0.1 ovirtlive.localdomain localdomain' >> /etc/hosts
 
 # Setting wallapaper
@@ -132,35 +130,21 @@ cp /home/oVirtuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg /usr/share/bac
 cp /home/oVirtuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg /usr/share/backgrounds/spherical-cow/default/wide/spherical-cow.png
 cp /home/oVirtuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg /usr/share/backgrounds/spherical-cow/default/normalish/spherical-cow.png
 
-# Copying network files
-cp /home/oVirtuser/oVirtLiveFiles/etc/sysconfig/network-scripts/* /etc/sysconfig/network-scripts
-
-# Placing repo file
-cp /home/oVirtuser/oVirtLiveFiles/etc/yum.repos.d/ovirt.repo /etc/yum.repos.d
-
-# Copying autostart and desktop shortcuts
-cp /home/oVirtuser/oVirtLiveFiles/usr/share/applications/* /usr/share/applications
-
 # Link setup in autostart
-cp /usr/share/applications/engine-setup.desktop ~oVirtuser/.config/autostart/engine-setup.desktop
-
-# Setting up autologin
-cp /home/oVirtuser/oVirtLiveFiles/etc/gdm/* /etc/gdm
-
-# Overriding glib schemas
-cp /home/oVirtuser/oVirtLiveFiles/usr/share/glib-2.0/schemas/* /usr/share/glib-2.0/schemas
+ln -s /usr/share/applications/engine-setup.desktop ~oVirtuser/.config/autostart/engine-setup.desktop
 
 glib-compile-schemas /usr/share/glib-2.0/schemas
 
 #workaround for bz 878119
 #echo 'blacklist iTCO_wdt' >> /etc/modprobe.d/blacklist.conf
 #echo 'blacklist iTCO_vendor_support' >> /etc/modprobe.d/blacklist.conf
-sed -i 's/\#WDMDOPTS/WDMDOPTS/g' /etc/sysconfig/wdmd
+sed -i 's/#WDMDOPTS/WDMDOPTS/g' /etc/sysconfig/wdmd
 yum localinstall -y /home/oVirtuser/oVirtLiveFiles/rpms/*.rpm
 
+umask 0027
+
 # Updating patched files
-cp /home/oVirtuser/oVirtLiveFiles/ovirt_live_101.py /usr/share/ovirt-engine/scripts/plugins
-cp /home/oVirtuser/oVirtLiveFiles/ovirt_live_101.py /usr/share/ovirt-engine/scripts
+cp -r /home/oVirtuser/root/* /
 
 
 # Manipulate fqdn validation, so that it is possible to setup with answer file
