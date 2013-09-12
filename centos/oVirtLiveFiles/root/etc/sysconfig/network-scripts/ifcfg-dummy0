@@ -5,4 +5,3 @@ HOTPLUG=no
 NM_CONTROLLED=no
 BRIDGE=ovirtmgmt
 PROMISC=yes
-

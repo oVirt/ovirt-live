@@ -118,8 +118,6 @@ find /home/oVirtuser/oVirtLiveFiles/patches -name '*.patch' | sort | while read 
     patch -d /usr/share/ovirt-engine/scripts < "$patch"
 done
 
-
-
 # Configuring autologin
 sed -i 's/\[daemon\]/\[daemon\]\nAutomaticLoginEnable\=True\nAutomaticLogin\=oVirtuser/g' /etc/gdm/custom.conf
 
@@ -135,9 +133,6 @@ ln -s /usr/share/applications/engine-setup.desktop ~oVirtuser/.config/autostart/
 
 glib-compile-schemas /usr/share/glib-2.0/schemas
 
-#workaround for bz 878119
-#echo 'blacklist iTCO_wdt' >> /etc/modprobe.d/blacklist.conf
-#echo 'blacklist iTCO_vendor_support' >> /etc/modprobe.d/blacklist.conf
 sed -i 's/#WDMDOPTS/WDMDOPTS/g' /etc/sysconfig/wdmd
 yum localinstall -y /home/oVirtuser/oVirtLiveFiles/rpms/*.rpm
 
@@ -146,11 +141,9 @@ umask 0027
 # Updating patched files
 cp -r /home/oVirtuser/root/* /
 
-
 # Manipulate fqdn validation, so that it is possible to setup with answer file
 sed -i 's/raise Exception(output_messages.ERR_EXP_VALIDATE_PARAM % param.getKey("CONF_NAME"))/logging.debug("Failed to validate %s with value %s",param,paramValue)/g' /usr/share/ovirt-engine/scripts/engine-setup.py
 sed -i -e 's/\(^SELINUX=\).*$/\1permissive/' /etc/selinux/config
-# yad script - give some gui to installation
 
 echo "Finishing post section"
 %end

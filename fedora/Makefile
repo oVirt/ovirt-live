@@ -27,16 +27,17 @@ clean:
 iso:
 	cp -f /usr/share/spin-kickstarts/fedora-live-base.ks kickstart/ovirt-live-base.ks
 	sed -i -e 's/selinux \-\-enforcing/selinux \-\-permissive/g' \
-            -e 's/services \-\-enabled\=NetworkManager \-\-disabled\=network\,sshd/services \-\-enabled\=NetworkManager\,sshd \-\-disabled\=network\,firewalld\nrepo \-\-name\=ovirt \-\-baseurl\=http:\/\/ovirt.org\/releases\/stable\/rpm\/Fedora\/18/g' \
+            -e 's/services \-\-enabled\=NetworkManager \-\-disabled\=network\,sshd/services \-\-enabled\=NetworkManager\,sshd \-\-disabled\=network\,firewalld\nrepo \-\-name\=ovirt \-\-baseurl\=http:\/\/ovirt.org\/releases\/stable\/rpm\/Fedora\/19/g' \
              -e 's/liveuser/oVirtuser/g' \
              -e 's/firewall \-\-enabled/firewall \-\-disabled/g' \
              -e 's/livedir\=\"LiveOS\"/livedir\=\"LiveoVirt\"/g' \
              -e "s/\(^.*stop.*atd\..*:\)/\1\nmodprobe dummy/g" kickstart/ovirt-live-base.ks
 
 	wget -N http://distro.ibiblio.org/tinycorelinux/4.x/x86/release/TinyCore-current.iso
-	wget -N http://download.fedoraproject.org/pub/fedora/linux/releases/18/Live/x86_64/Fedora-18-x86_64-Live-Desktop.iso
-	mkdir oVirtLiveFiles/iso
-
+	wget -N http://download.fedoraproject.org/pub/fedora/linux/releases/19/Live/x86_64/Fedora-Live-Desktop-x86_64-19-1.iso
+	if [[ ! -d oVirtLiveFiles/iso ]]; then
+            mkdir oVirtLiveFiles/iso 
+        fi
 	mv -f *.iso oVirtLiveFiles/iso
 
 	livecd-creator -d -v  \
@@ -50,7 +51,7 @@ iso:
 nightly-iso:
 	cp -f /usr/share/spin-kickstarts/fedora-live-base.ks kickstart/ovirt-live-base.ks
 	sed -i -e 's/selinux \-\-enforcing/selinux \-\-permissive/g' \
-            -e 's/services \-\-enabled\=NetworkManager \-\-disabled\=network\,sshd/services \-\-enabled\=NetworkManager\,sshd \-\-disabled\=network\,firewalld\nrepo \-\-name\=ovirt \-\-baseurl\=http:\/\/ovirt.org\/releases\/nightly\/rpm\/Fedora\/18/g' \
+            -e 's/services \-\-enabled\=NetworkManager \-\-disabled\=network\,sshd/services \-\-enabled\=NetworkManager\,sshd \-\-disabled\=network\,firewalld\nrepo \-\-name\=ovirt \-\-baseurl\=http:\/\/ovirt.org\/releases\/nightly\/rpm\/Fedora\/19/g' \
              -e 's/liveuser/oVirtuser/g' \
              -e 's/firewall \-\-enabled/firewall \-\-disabled/g' \
              -e 's/livedir\=\"LiveOS\"/livedir\=\"LiveoVirt\"/g' \

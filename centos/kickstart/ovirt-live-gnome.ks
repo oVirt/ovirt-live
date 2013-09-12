@@ -155,19 +155,7 @@ cp -r /root/oVirtLiveFiles /home/liveuser
 
 yum localinstall -y /home/liveuser/oVirtLiveFiles/rpms/*.rpm
 
-find /home/liveuser/oVirtLiveFiles/patches -name '*.patch' | sort | while read patch; do
-    patch -d /usr/share/ovirt-engine/scripts < "$patch"
-done
-
-#settings up vdsm to use a dummy nic
-cp /home/liveuser/oVirtLiveFiles/50-vdsm-conf-fake-nic.conf /etc/ovirt-host-deploy.conf.d/
 echo '10.0.0.1 livecd.localdomain localdomain' >> /etc/hosts
-
-#copying plugin
-cp /home/liveuser/oVirtLiveFiles/ovirt_live_101.py /usr/share/ovirt-engine/scripts/plugins/
-
-#copying network files
-cp /home/liveuser/oVirtLiveFiles/etc/sysconfig/network-scripts/* /etc/sysconfig/network-scripts/
 
 # remove folders/files that use a lot of diskspace
 # and are not really needed for LiveCD
@@ -179,18 +167,15 @@ rm -rf /usr/share/doc/testdisk-*
 #echo 'blacklist iTCO_vendor_support' >> /etc/modprobe.d/blacklist.conf
 sed -i 's/\#WDMDOPTS/WDMDOPTS/g' /etc/sysconfig/wdmd
 
-
-# Manipulate fqdn validation, so that it is possible to setup with answer file
-sed -i 's/raise Exception(output_messages.ERR_EXP_VALIDATE_PARAM % param.getKey("CONF_NAME"))/logging.debug("Failed to validate %s with value %s",param,paramValue)/g' /usr/share/ovirt-engine/scripts/engine-setup.py
-
 #configuring autostart
 mkdir -p /home/liveuser/.config/autostart
 
-#copying autostart and desktop shortcuts
-cp /home/liveuser/oVirtLiveFiles/usr/share/applications/* /usr/share/applications/
+umask 0027
 
-#link setup in autostart
-cp /usr/share/applications/engine-setup.desktop /home/liveuser/.config/autostart/
+# Updating patched files
+cp -r /home/liveuser/oVirtLiveFiles/root/* /
+
+chmod 666 /etc/xdg/autostart/engine-setup.desktop
 
 #setting up wallpaper
 su -c "gconftool-2 -t str -s /desktop/gnome/background/picture_filename /home/liveuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg" - liveuser

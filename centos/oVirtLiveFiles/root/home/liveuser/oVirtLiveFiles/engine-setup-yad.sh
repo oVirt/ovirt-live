@@ -30,7 +30,7 @@ if [[ $ret -eq 2 ]]; then
 fi
 
 case $action in
-    automatic*) cmd="sudo /usr/bin/engine-setup --answer-file=/home/liveuser/oVirtLiveFiles/ovirt-answer" ;;
+    automatic*) cmd="sudo /usr/bin/engine-setup --offline --config=/home/liveuser/oVirtLiveFiles/ovirt-answer" ;;
     interactive*) cmd="gnome-terminal --command=\"sudo /usr/bin/engine-setup\";sleep 20" ;;
     *) exit 1 ;;
 esac
