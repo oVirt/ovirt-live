@@ -17,7 +17,7 @@ repo --name=base       --mirrorlist=http://mirrorlist.centos.org/?release=$relea
 repo --name=updates    --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
 repo --name=epel       --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=$basearch
 repo --name=epel-testing --baseurl=http://dl.fedoraproject.org/pub/epel/testing/6/x86_64/
-repo --name=ovirt     --baseurl=http://resources.ovirt.org/releases/beta/rpm/EL/6/
+repo --name=ovirt     --baseurl=http://resources.ovirt.org/releases/3.3/rpm/EL/6/
 repo --name=gluster   --baseurl=http://download.gluster.org/pub/gluster/glusterfs/3.4/3.4.0/EPEL.repo/epel-$releasever/$basearch/
 repo --name=glusternoarch --baseurl=http://download.gluster.org/pub/gluster/glusterfs/3.4/3.4.0/EPEL.repo/epel-$releasever/noarch
 repo --name=local --baseurl=file://@PATH@/oVirtLiveFiles/rpms/
