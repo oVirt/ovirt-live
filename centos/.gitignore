@@ -1,0 +1,6 @@
+*.tmp
+*.log
+
+downloads
+repo
+kickstart/ovirt-live-base.ks

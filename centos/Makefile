@@ -1,0 +1,64 @@
+all:		\
+		prereq \
+		packages \
+		livecd \
+		$(NULL)
+
+clean:
+	rm -fr downloads/*.tmp
+	rm -fr *.tmp
+	rm -f kickstart/ovirt-live-base.ks
+
+dist-clean:	clean
+
+maintainer-clean:	dist-clean
+	rm -fr downloads
+
+prereq:
+	[ $$(id -u) = 0 ]
+
+download: 	\
+		downloads/yad-0.14.2-1.fc14.x86_64.rpm \
+		downloads/TinyCore-current.iso \
+		$(NULL)
+
+_download:
+	mkdir -p downloads
+	rm -f "downloads/$(OUT)"
+	curl "$(URL)" > "downloads/$(OUT).tmp"
+	mv "downloads/$(OUT).tmp" "downloads/$(OUT)"
+
+downloads/yad-0.14.2-1.fc14.x86_64.rpm:
+	$(MAKE) _download URL="http://kojipkgs.fedoraproject.org//packages/yad/0.14.2/1.fc14/x86_64/yad-0.14.2-1.fc14.x86_64.rpm" OUT="yad-0.14.2-1.fc14.x86_64.rpm"
+
+downloads/TinyCore-current.iso:
+	$(MAKE) _download URL="http://distro.ibiblio.org/tinycorelinux/4.x/x86/release/TinyCore-current.iso" OUT="TinyCore-current.iso"
+
+
+repo:		\
+		downloads/yad-0.14.2-1.fc14.x86_64.rpm \
+		$(NULL)
+	rm -fr repo
+	mkdir -p repo.tmp
+	ln -s ../downloads/yad-0.14.2-1.fc14.x86_64.rpm repo.tmp/yad-0.14.2-1.fc14.x86_64.rpm
+	createrepo repo.tmp
+	mv repo.tmp repo
+
+packages:
+	rpm -ql livecd-tools > /dev/null 2>&1 || yum install -y livecd-tools
+	rpm -ql createrepo > /dev/null 2>&1 || yum install -y createrepo
+
+
+.SUFFIXES:
+.SUFFIXES: .in
+.in:
+	sed \
+		-e "s#@PATH@#$$(pwd)#g" \
+		"$<" > "$@"
+
+livecd:		\
+		repo \
+		downloads/TinyCore-current.iso \
+		kickstart/ovirt-live-base.ks \
+		$(NULL)
+	livecd-creator -d -v  --config=kickstart/ovirt-live-gnome.ks --cache=/home --fslabel=ovirt-live-el6 > iso.log 2>&1
