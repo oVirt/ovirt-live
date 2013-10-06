@@ -45,6 +45,7 @@ repo:		\
 	mv repo.tmp repo
 
 packages:
+	rpm -ql epel-release > /dev/null 2>&1 || yum install -y http://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 	rpm -ql livecd-tools > /dev/null 2>&1 || yum install -y livecd-tools
 	rpm -ql createrepo > /dev/null 2>&1 || yum install -y createrepo
 
