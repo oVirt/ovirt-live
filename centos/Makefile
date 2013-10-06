@@ -15,7 +15,7 @@ maintainer-clean:	dist-clean
 	rm -fr downloads
 
 prereq:
-	[ $$(id -u) = 0 ]
+	if [ $$(id -u) != 0 ]; then echo "You must be root"; exit 1; fi
 
 download: 	\
 		downloads/yad-0.14.2-1.fc14.x86_64.rpm \
