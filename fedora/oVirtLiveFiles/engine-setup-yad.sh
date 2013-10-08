@@ -40,7 +40,7 @@ $cmd
 if [[ $? -eq 0 ]]; then
     echo "setup ended successfully"
     rm -f ~oVirtuser/.config/autostart/engine-setup.desktop
-    yad --text "setup ended successfully\nopening ovirt-engine now on htts://localhost.localdomain" --button="gtk-ok:0"
+    yad --text "setup ended successfully\nopening oVirt now on https://localhost.localdomain" --button="gtk-ok:0"
     /bin/firefox https://localhost.localdomain &
     exit 0
 fi

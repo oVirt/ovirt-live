@@ -39,7 +39,7 @@ echo "Excecuting $cmd"
 if $cmd; then
     echo "Setup ended successfully"
     rm -f ~liveuser/.config/autostart/engine-setup.desktop
-    yad --text "Setup ended successfully\nopening ovirt now on htts://localhost.localdomain" --button="gtk-ok:0"
+    yad --text "Setup ended successfully\nopening oVirt now on https://localhost.localdomain" --button="gtk-ok:0"
     /usr/bin/firefox https://localhost.localdomain &
     exit 0
 fi
