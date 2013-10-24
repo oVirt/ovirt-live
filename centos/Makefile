@@ -8,6 +8,7 @@ clean:
 	rm -fr downloads/*.tmp
 	rm -fr *.tmp
 	rm -f kickstart/ovirt-live-base.ks
+	rm -rf oVirtLiveFiles/iso
 
 dist-clean:	clean
 
@@ -33,7 +34,6 @@ downloads/yad-0.14.2-1.fc14.x86_64.rpm:
 
 downloads/TinyCore-current.iso:
 	$(MAKE) _download URL="http://distro.ibiblio.org/tinycorelinux/4.x/x86/release/TinyCore-current.iso" OUT="TinyCore-current.iso"
-
 
 repo:		\
 		downloads/yad-0.14.2-1.fc14.x86_64.rpm \
@@ -62,4 +62,6 @@ livecd:		\
 		downloads/TinyCore-current.iso \
 		kickstart/ovirt-live-base.ks \
 		$(NULL)
+	mkdir -p oVirtLiveFiles/iso
+	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
 	livecd-creator -d -v  --config=kickstart/ovirt-live-gnome.ks --cache=/home --fslabel=ovirt-live-el6 > iso.log 2>&1
