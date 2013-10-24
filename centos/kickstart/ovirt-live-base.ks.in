@@ -23,7 +23,7 @@ repo --name=glusternoarch --baseurl=http://download.gluster.org/pub/gluster/glus
 repo --name=local --baseurl=file://@PATH@/oVirtLiveFiles/rpms/
 
 xconfig --startxonboot
-services --enabled=network,sshd,nfs --disabled=NetworkManager
+services --enabled=network,sshd,nfs,NetworkManager
 
 ########################################################################
 #
