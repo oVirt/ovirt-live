@@ -13,6 +13,10 @@ auth --useshadow --enablemd5
 selinux --permissive
 firewall --enabled --service=mdns
 
+# Ensures that the USB3 driver module is available during boot. Required for
+# booting on USB3 port.
+device xhci-hcd
+
 repo --name=base       --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
 repo --name=updates    --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
 repo --name=epel       --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=$basearch
