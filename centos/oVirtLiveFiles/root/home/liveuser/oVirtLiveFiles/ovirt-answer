@@ -20,6 +20,7 @@ OVESETUP_CONFIG/firewallManager=str:firewalld
 OVESETUP_CONFIG/websocketProxyConfig=none:None
 OVESETUP_CONFIG/fqdn=str:livecd.localdomain
 OVESETUP_CONFIG/storageType=str:nfs
+OVESETUP_CONFIG/isoDomainACL=str:0.0.0.0/0.0.0.0(rw)
 OVESETUP_PROVISIONING/postgresProvisioningEnabled=bool:True
 OVESETUP_APACHE/configureRootRedirection=bool:True
 OVESETUP_APACHE/configureSsl=bool:True
