@@ -18,7 +18,6 @@ OVESETUP_CONFIG/adminPassword=str:ovirt
 OVESETUP_CONFIG/applicationMode=str:both
 OVESETUP_CONFIG/firewallManager=str:iptables
 OVESETUP_CONFIG/updateFirewall=bool:True
-OVESETUP_CONFIG/websocketProxyConfig=none:None
 OVESETUP_CONFIG/fqdn=str:livecd.localdomain
 OVESETUP_CONFIG/storageType=str:nfs
 OVESETUP_CONFIG/websocketProxyConfig=bool:False
