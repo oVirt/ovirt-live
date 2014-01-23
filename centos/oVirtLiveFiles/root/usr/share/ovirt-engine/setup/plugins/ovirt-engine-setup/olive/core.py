@@ -30,13 +30,10 @@ _ = lambda m: gettext.dgettext(message=m, domain='ovirt-engine-setup')
 
 from otopi import util
 from otopi import plugin
-from otopi import filetransaction
-from otopi import constants as otopicons
 
 
 from ovirt_engine_setup import util as osetuputil
 from ovirt_engine_setup import constants as osetupcons
-from ovirt_engine_setup import dialog
 
 
 import oliveconst
@@ -135,13 +132,16 @@ class Plugin(plugin.PluginBase):
 
     @plugin.event(
         stage=plugin.Stages.STAGE_MISC,
-        condition=lambda self: self._enabled,
+        condition=lambda self: (
+            self._enabled and
+            self.environment[osetupcons.ConfigEnv.ISO_DOMAIN_EXISTS]
+        ),
         name=oliveconst.Stages.COPY_ISO,
         before=(
             oliveconst.Stages.CREATE_VM,
         ),
         after=(
-            oliveconst.Stages.CONFIG_STORAGE,
+            osetupcons.Stages.CONFIG_ISO_DOMAIN_AVAILABLE,
         ),
     )
     def _copyiso(self):
