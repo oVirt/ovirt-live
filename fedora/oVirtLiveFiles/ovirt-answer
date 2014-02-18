@@ -28,4 +28,3 @@ OSETUP_RPMDISTRO/enableUpgrade=none:None
 OVESETUP_AIO/configure=bool:True
 OVESETUP_AIO/storageDomainDir=str:/var/lib/images
 OVESETUP_AIO/rootPassword=str:ovirt
-
