@@ -29,9 +29,13 @@ if [[ $ret -eq 2 ]]; then
     exit 0
 fi
 
+do_interactive() {
+    gnome-terminal --disable-factory --command='sh -c "sudo /usr/bin/engine-setup --offline; sleep 20"'
+}
+
 case $action in
     automatic*) cmd="sudo /usr/bin/engine-setup --answer-file=/home/oVirtuser/oVirtLiveFiles/ovirt-answer" ;;
-    interactive*) cmd="gnome-terminal --command=\"sudo /usr/bin/engine-setup\";sleep 20" ;;
+    interactive*) cmd="do_interactive" ;;
     *) exit 1 ;;
 esac
 
