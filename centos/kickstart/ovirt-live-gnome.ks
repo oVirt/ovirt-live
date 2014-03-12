@@ -13,7 +13,7 @@ part / --size 16000 --fstype ext4
 ########################################################################
 
 %include ovirt-live-base.ks
-rootpw  --iscrypted $1$E99/AuW1$R80apH.3BEGOUB1YO5Glu.
+rootpw  ovirt
 
 ########################################################################
 # Packages
