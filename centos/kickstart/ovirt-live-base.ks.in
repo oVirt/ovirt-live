@@ -20,7 +20,6 @@ device xhci-hcd
 repo --name=base       --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
 repo --name=updates    --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
 repo --name=epel       --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=$basearch
-repo --name=epel-testing --baseurl=http://dl.fedoraproject.org/pub/epel/testing/6/x86_64/
 repo --name=ovirt     --baseurl=http://resources.ovirt.org/pub/ovirt-snapshot/rpm/el6/
 repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-snapshot-static/rpm/el6/
 repo --name=gluster   --baseurl=http://download.gluster.org/pub/gluster/glusterfs/3.4/LATEST/EPEL.repo/epel-$releasever/$basearch/
@@ -215,7 +214,7 @@ if [ ! "\\\$( cmdline_parameter noswap )" ] && [ -f /mnt/live/\\\${livedir}/swap
   action "Enabling swap file" swapon /mnt/live/\\\${livedir}/swap.img
 fi
 
-### functions for persisten Home 
+### functions for persisten Home
 mountPersistentHome() {
   # support label/uuid
   if [ "\\\${homedev##LABEL=}" != "\\\${homedev}" -o "\\\${homedev##UUID=}" != "\\\${homedev}" ]; then
@@ -288,7 +287,7 @@ fi
 if [ "\\\$CUPS" ]; then
     if [ -e /etc/cups/client.conf ]; then
         sed -i "s|.*ServerName .*|ServerName  \\\$CUPS|" /etc/cups/client.conf
-        grep -q ServerName /etc/cups/client.conf || echo "ServerName  \\\$CUPS" >> /etc/cups/client.conf 
+        grep -q ServerName /etc/cups/client.conf || echo "ServerName  \\\$CUPS" >> /etc/cups/client.conf
     fi
 fi
 
@@ -298,8 +297,8 @@ sed -i -e "s|HOSTNAME=.*|HOSTNAME=\\\$hostname|g" /etc/sysconfig/network
 /bin/hostname \\\$hostname
 
 #-----------------------------------------------------------------------
-# EXIT here if LiveCD has already been configured         
-# happens if you start the LiveCD with persistent changes 
+# EXIT here if LiveCD has already been configured
+# happens if you start the LiveCD with persistent changes
 #-----------------------------------------------------------------------
 
 [ "\\\$configdone" ] && exit 0
@@ -390,7 +389,7 @@ gconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults
 gconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults -s -t bool /apps/gnome-packagekit/enable_font_helper false >/dev/null
 gconftool-2 --direct --config-source=xml:readwrite:/etc/gconf/gconf.xml.defaults -s -t bool /apps/gnome-packagekit/enable_mime_type_helper false >/dev/null
 
-### start system-config-firewall with su 
+### start system-config-firewall with su
 #  (bugfix: system-config-firewall does not work when root has no password)
 sed -i "s|^Exec=.*|Exec=su - -c /usr/bin/system-config-firewall|" /usr/share/applications/system-config-firewall.desktop
 sed -i "s|^Terminal=.*|Terminal=true|"                            /usr/share/applications/system-config-firewall.desktop
@@ -457,7 +456,7 @@ if [ "\\\$( cmdline_parameter automount )" ]; then
 
 		# get the partition type
 		case \\\`echo \\\$FDISK_ENTRY | cut -d':' -f2-\\\` in
-		*fat*) 
+		*fat*)
 		    FSTYPES="vfat"
 		    EXTRAOPTIONS=",uid=500";;
 		*)
@@ -571,7 +570,7 @@ if [ "\\\$( cmdline_parameter textinst )" ] ; then
    /sbin/reboot
 fi
 
-# configure X, allowing user to override xdriver 
+# configure X, allowing user to override xdriver
 # (does not work in SL6 with xorg 7.4)
 # if [ -n "\\\$xdriver" ]; then
 #   cat > /etc/X11/xorg.conf.d/00-xdriver.conf <<FOE
@@ -591,7 +590,7 @@ fi
 # configure keyboard
 # (does not work in SL6 because system-config-keyboard is missing)
 if [ "\\\$kb" ]; then
-    exists system-config-keyboard --noui \\\$kb 
+    exists system-config-keyboard --noui \\\$kb
 fi
 
 
@@ -610,7 +609,7 @@ echo "Creating /sbin/halt.local"
 cat > /sbin/halt.local << EOF_haltlocal
 #!/bin/bash
 #
-# Ejects LiveCD/DVD, if boot parameter eject is given 
+# Ejects LiveCD/DVD, if boot parameter eject is given
 #
 
 . /etc/init.d/functions
@@ -704,7 +703,7 @@ EOF_post
 
 ########################################################################
 #
-#  LiveCD post no chroot install 
+#  LiveCD post no chroot install
 #
 ########################################################################
 %post --nochroot
