@@ -64,4 +64,4 @@ livecd:		\
 		$(NULL)
 	mkdir -p oVirtLiveFiles/iso
 	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
-	livecd-creator -d -v  --config=kickstart/ovirt-live-gnome.ks --cache=/home --fslabel=ovirt-live-el6-3.4.3-1 > iso.log 2>&1
+	livecd-creator -d -v  --config=kickstart/ovirt-live-gnome.ks --cache=/home --fslabel=ovirt-live-el6-3.4-snapshot > iso.log 2>&1
