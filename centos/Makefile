@@ -7,7 +7,7 @@ all:		\
 clean:
 	rm -fr downloads/*.tmp
 	rm -fr *.tmp
-	rm -f kickstart/ovirt-live-base.ks
+	rm -f kickstart/ovirt-live-ovirt-custom.ks
 	rm -rf oVirtLiveFiles/iso
 
 dist-clean:	clean
@@ -60,9 +60,9 @@ packages:
 livecd:		\
 		repo \
 		downloads/TinyCore-current.iso \
-		kickstart/ovirt-live-base.ks \
+		kickstart/ovirt-live-ovirt-custom.ks \
 		$(NULL)
 	mkdir -p oVirtLiveFiles/iso
 	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
 	setenforce 0
-	livecd-creator -d -v  --config=kickstart/ovirt-live-gnome.ks --cache=/home --fslabel=ovirt-live-el6-master 2>&1 | tee iso.log
+	livecd-creator -d -v  --config=kickstart/ovirt-live-ovirt-custom.ks --cache=/home --fslabel=ovirt-live-el6-master 2>&1 | tee iso.log
