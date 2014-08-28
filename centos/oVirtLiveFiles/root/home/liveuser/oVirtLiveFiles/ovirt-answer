@@ -1,6 +1,7 @@
 [environment:default]
 OSETUP_RPMDISTRO/enableUpgrade=bool:False
 OVESETUP_CORE/engineStop=none:None
+OVESETUP_ENGINE_CORE/enable=bool:True
 OVESETUP_DIALOG/confirmSettings=bool:True
 OVESETUP_DB/database=str:engine
 OVESETUP_DB/fixDbViolations=none:None
