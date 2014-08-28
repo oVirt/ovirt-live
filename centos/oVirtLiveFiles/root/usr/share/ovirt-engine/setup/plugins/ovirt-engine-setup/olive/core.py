@@ -33,8 +33,8 @@ from otopi import plugin
 
 
 from ovirt_engine_setup import util as osetuputil
-from ovirt_engine_setup import constants as osetupcons
-
+from ovirt_engine_setup.engine import constants as oenginecons
+from ovirt_engine_setup.engine_common import constants as oengcommcon
 
 import oliveconst
 
@@ -87,21 +87,21 @@ class Plugin(plugin.PluginBase):
             oliveconst.Stages.CONFIG_STORAGE,
         ),
         after=(
-            osetupcons.Stages.AIO_CONFIG_VDSM,
+            oenginecons.Stages.AIO_CONFIG_VDSM,
         ),
     )
     def _initapi(self):
         self._engine_api = self._ovirtsdk_api.API(
             url='https://{fqdn}:{port}/api'.format(
                 fqdn=self.environment[osetupcons.ConfigEnv.FQDN],
-                port=self.environment[osetupcons.ConfigEnv.PUBLIC_HTTPS_PORT],
+                port=self.environment[oengcommcon.ConfigEnv.PUBLIC_HTTPS_PORT],
             ),
             username='{user}@{domain}'.format(
                 user=osetupcons.Const.USER_ADMIN,
-                domain=osetupcons.Const.DOMAIN_INTERNAL,
+                domain=oengcommcon.Const.DOMAIN_INTERNAL,
             ),
             password=self.environment[osetupcons.ConfigEnv.ADMIN_PASSWORD],
-            ca_file=osetupcons.FileLocations.OVIRT_ENGINE_PKI_ENGINE_CA_CERT,
+            ca_file=oenginecons.FileLocations.OVIRT_ENGINE_PKI_ENGINE_CA_CERT,
         )
 
     @plugin.event(
@@ -134,39 +134,40 @@ class Plugin(plugin.PluginBase):
         stage=plugin.Stages.STAGE_MISC,
         condition=lambda self: (
             self._enabled and
-            self.environment[osetupcons.ConfigEnv.ISO_DOMAIN_EXISTS]
+            self.environment[oenginecons.ConfigEnv.ISO_DOMAIN_EXISTS]
         ),
         name=oliveconst.Stages.COPY_ISO,
         before=(
             oliveconst.Stages.CREATE_VM,
         ),
         after=(
-            osetupcons.Stages.CONFIG_ISO_DOMAIN_AVAILABLE,
+            oenginecons.Stages.CONFIG_ISO_DOMAIN_AVAILABLE,
         ),
     )
     def _copyiso(self):
         self.logger.debug('Copying Iso Files')
         targetPath = os.path.join(
             self.environment[
-                osetupcons.ConfigEnv.ISO_DOMAIN_NFS_MOUNT_POINT
+                oenginecons.ConfigEnv.ISO_DOMAIN_NFS_MOUNT_POINT
             ],
             self.environment[
-                osetupcons.ConfigEnv.ISO_DOMAIN_SD_UUID
+                oenginecons.ConfigEnv.ISO_DOMAIN_SD_UUID
             ],
             'images',
-            osetupcons.Const.ISO_DOMAIN_IMAGE_UID
+            oenginecons.Const.ISO_DOMAIN_IMAGE_UID
         )
         self.logger.debug('target path' + targetPath)
+        # FIXME don't hardcode paths
         for filename in glob.glob('/home/liveuser/oVirtLiveFiles/iso/*.iso'):
             self.logger.debug(filename)
             shutil.move(filename, targetPath)
             os.chown(
                 os.path.join(targetPath, os.path.basename(filename)),
                 osetuputil.getUid(
-                    osetupcons.Defaults.DEFAULT_SYSTEM_USER_VDSM
+                    oengcommcon.Defaults.DEFAULT_SYSTEM_USER_VDSM
                 ),
                 osetuputil.getGid(
-                    osetupcons.Defaults.DEFAULT_SYSTEM_GROUP_KVM
+                    oengcommcon.Defaults.DEFAULT_SYSTEM_GROUP_KVM
                 )
             )
 
