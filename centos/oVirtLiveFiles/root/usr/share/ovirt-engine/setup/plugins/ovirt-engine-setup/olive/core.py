@@ -108,9 +108,6 @@ class Plugin(plugin.PluginBase):
         stage=plugin.Stages.STAGE_CLOSEUP,
         condition=lambda self: self._enabled,
         name=oliveconst.Stages.CONFIG_STORAGE,
-        before=(
-            oliveconst.Stages.COPY_ISO,
-        ),
         after=(
             oliveconst.Stages.INIT,
         ),
@@ -176,7 +173,7 @@ class Plugin(plugin.PluginBase):
         condition=lambda self: self._enabled,
         name=oliveconst.Stages.CREATE_VM,
         after=(
-            oliveconst.Stages.COPY_ISO,
+            oliveconst.Stages.INIT,
         ),
     )
     def _createvm(self):
