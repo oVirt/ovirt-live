@@ -1,0 +1,81 @@
+########################################################################
+#
+#  oVirt Project LiveCD customization
+#
+########################################################################
+
+# Ensures that the USB3 driver module is available during boot. Required for
+# booting on USB3 port.
+device xhci-hcd
+
+rootpw  ovirt
+
+# oVirt repositories
+repo --name=ovirt35 --baseurl=http://resources.ovirt.org/pub/ovirt-3.5-snapshot/rpm/el$releasever/
+repo --name=ovirt35static --baseurl=http://resources.ovirt.org/pub/ovirt-3.5-snapshot-static/rpm/el$releasever/
+repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-6-$basearch/
+repo --name=gluster --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/$basearch/
+repo --name=glusternoarch --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/noarch
+repo --name=local --baseurl=file://@PATH@/oVirtLiveFiles/rpms/
+
+########################################################################
+# Include kickstart files
+########################################################################
+
+%include ovirt-live-gnome.ks
+
+
+########################################################################
+# Packages
+########################################################################
+
+%packages
+# All in one
+ovirt-engine-setup-plugin-allinone
+ovirt-log-collector
+
+# oVirt Live scripts
+yad
+firefox
+
+# Useful utils
+vim
+
+%end
+
+########################################################################
+# Post installation
+########################################################################
+
+%post --nochroot
+cp -r oVirtLiveFiles $INSTALL_ROOT/root/
+%end
+
+%post
+
+mkdir -p /home/liveuser/oVirtLiveFiles
+cp -r /root/oVirtLiveFiles /home/liveuser
+yum localinstall -y /home/liveuser/oVirtLiveFiles/rpms/*.rpm
+echo '10.0.0.1 livecd.localdomain localdomain' >> /etc/hosts
+
+#workaround for bz 878119
+#echo 'blacklist iTCO_wdt' >> /etc/modprobe.d/blacklist.conf
+#echo 'blacklist iTCO_vendor_support' >> /etc/modprobe.d/blacklist.conf
+sed -i 's/\#WDMDOPTS/WDMDOPTS/g' /etc/sysconfig/wdmd
+
+#configuring autostart
+mkdir -p /home/liveuser/.config/autostart
+
+umask 0027
+
+# Updating patched files
+cp -r /home/liveuser/oVirtLiveFiles/root/* /
+
+chmod 666 /etc/xdg/autostart/engine-setup.desktop
+
+#setting up wallpaper
+su -c "gconftool-2 -t str -s /desktop/gnome/background/picture_filename /home/liveuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg" - liveuser
+
+sed -i 's/pc-0.14/rhel6.4.0/' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql
+
+%end

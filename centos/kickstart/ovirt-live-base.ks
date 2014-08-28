@@ -2,32 +2,48 @@
 #
 # ovirt-live-base.ks
 #
+# Defines the basics for all kickstarts of ovirt-live
 # Kickstarts including this template can override these settings
 #
 ########################################################################
+
+# Based on
+# https://svn.iac.ethz.ch/websvn/pub/websvn-pub/wsvn/livecd/trunk/SL6/livecd-config/sl65-live-base.ks
 
 lang en_US.UTF-8
 keyboard us
 timezone US/Eastern
 auth --useshadow --enablemd5
+#{ ovirt: avoid issues with selinux
+#selinux --enforcing
 selinux --permissive
+#}
 firewall --enabled --service=mdns
 
-# Ensures that the USB3 driver module is available during boot. Required for
-# booting on USB3 port.
-device xhci-hcd
+#{ ovirt: prefer CentOS over SL
+# SL repositories
+#repo --name=base      --baseurl=http://ftp.scientificlinux.org/linux/scientific/6.5/$basearch/os/
+#repo --name=security  --baseurl=http://ftp.scientificlinux.org/linux/scientific/6.5/$basearch/updates/security/
+#repo --name=sl-addons --baseurl=http://ftp.scientificlinux.org/linux/scientific/6.5/$basearch/addons/
 
-repo --name=base       --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
-repo --name=updates    --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
-repo --name=epel       --mirrorlist=http://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=$basearch
-repo --name=ovirt      --baseurl=http://resources.ovirt.org/pub/ovirt-3.5-pre/rpm/el6/
-repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-6-$basearch/
-repo --name=gluster   --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/$basearch/
-repo --name=glusternoarch --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/noarch
-repo --name=local --baseurl=file://@PATH@/oVirtLiveFiles/rpms/
+repo --name=base --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
+repo --name=updates --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
+repo --name=epel --mirrorlist=http://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=$basearch
+
+#}
+# or use a mirror close to you
+#repo --name=base      --baseurl=http://mirror.switch.ch/ftp/mirror/scientificlinux/6.5/$basearch/os/
+#repo --name=security  --baseurl=http://mirror.switch.ch/ftp/mirror/scientificlinux/6.5/$basearch/updates/security/
+
+# fastbugs is disabled
+#repo --name=fastbugs  --baseurl=http://ftp.scientificlinux.org/linux/scientific/6.5/$basearch/updates/fastbugs/
 
 xconfig --startxonboot
+#{ ovirt:
+#services --enabled=NetworkManager --disabled=network,sshd
 services --enabled=network,sshd,nfs,NetworkManager
+#}
+
 
 ########################################################################
 #
@@ -57,11 +73,18 @@ tsclient
 busybox
 mailx
 memtest86+
+#{ ovirt:
+#Not needed
+#livecd-tools
+#}
 fuse
 wpa_supplicant
 dracut-network
-system-config-firewall-base
 yum-plugin-fastestmirror
+
+#{ ovirt:
+system-config-firewall-base
+#}
 
 # livecd bits to set up the livecd and be able to install
 anaconda
@@ -349,12 +372,21 @@ touch /media/.hal-mtab
 /usr/sbin/useradd -c "LiveCD default user" \\\$LIVECD_USER
 /usr/bin/passwd -d \\\$LIVECD_USER > /dev/null
 # give default user sudo privileges
+# echo "\\\$LIVECD_USER     ALL=(ALL)     NOPASSWD: ALL" >> /etc/sudoers
+#{ ovirt: enable sudo privileges
  echo "\\\$LIVECD_USER     ALL=(ALL)     NOPASSWD: ALL" >> /etc/sudoers
+#}
 
 ### set password
 if [ "\\\$PW" ]; then
     echo \\\$PW | passwd --stdin root >/dev/null
     echo \\\$PW | passwd --stdin \\\$LIVECD_USER >/dev/null
+#{ ovirt: avoid empty password
+#else
+#    # set empty password
+#    sed -i "s|^root:[^:]*:|root::|"                       /etc/shadow
+#    sed -i "s|^\\\$LIVECD_USER:[^:]*:|\\\$LIVECD_USER::|" /etc/shadow
+#}
 fi
 
 ### enable auto-login
@@ -760,9 +792,15 @@ cat \$LIVE_ROOT/isolinux/cleaned.txt      \
     \$LIVE_ROOT/isolinux/localboot.txt > \$LIVE_ROOT/isolinux/isolinux.cfg
 rm -f \$LIVE_ROOT/isolinux/*.txt
 
+# Forcing plymouth to show the logo in vesafb
+#{ ovirt: avoid forcing plymouth to show the logo
+#sed -i "s/rhgb/rhgb vga=791/g" \$LIVE_ROOT/isolinux/isolinux.cfg
+#}
+
 EOF_postnochroot
 
 # run postnochroot-install script
 /bin/bash -x /root/postnochroot-install 2>&1 | tee /root/postnochroot-install.log
 
 %end
+
