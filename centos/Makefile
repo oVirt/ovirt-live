@@ -19,7 +19,7 @@ prereq:
 	if [ $$(id -u) != 0 ]; then echo "You must be root"; exit 1; fi
 
 download: 	\
-		downloads/yad-0.14.2-1.fc14.x86_64.rpm \
+		downloads/yad-0.27.0-1.el6.x86_64.rpm \
 		downloads/TinyCore-current.iso \
 		$(NULL)
 
@@ -29,18 +29,18 @@ _download:
 	curl "$(URL)" > "downloads/$(OUT).tmp"
 	mv "downloads/$(OUT).tmp" "downloads/$(OUT)"
 
-downloads/yad-0.14.2-1.fc14.x86_64.rpm:
-	$(MAKE) _download URL="http://kojipkgs.fedoraproject.org//packages/yad/0.14.2/1.fc14/x86_64/yad-0.14.2-1.fc14.x86_64.rpm" OUT="yad-0.14.2-1.fc14.x86_64.rpm"
+downloads/yad-0.27.0-1.el6.x86_64.rpm:
+	$(MAKE) _download URL="http://kojipkgs.fedoraproject.org/packages/yad/0.27.0/1.el6/x86_64/yad-0.27.0-1.el6.x86_64.rpm" OUT="yad-0.27.0-1.el6.x86_64.rpm"
 
 downloads/TinyCore-current.iso:
 	$(MAKE) _download URL="http://distro.ibiblio.org/tinycorelinux/4.x/x86/release/TinyCore-current.iso" OUT="TinyCore-current.iso"
 
 repo:		\
-		downloads/yad-0.14.2-1.fc14.x86_64.rpm \
+		downloads/yad-0.27.0-1.el6.x86_64.rpm \
 		$(NULL)
 	rm -fr repo
 	mkdir -p repo.tmp
-	ln -s ../downloads/yad-0.14.2-1.fc14.x86_64.rpm repo.tmp/yad-0.14.2-1.fc14.x86_64.rpm
+	ln -s ../downloads/yad-0.27.0-1.el6.x86_64.rpm repo.tmp/yad-0.27.0-1.el6.x86_64.rpm
 	createrepo repo.tmp
 	mv repo.tmp repo
 
@@ -64,4 +64,5 @@ livecd:		\
 		$(NULL)
 	mkdir -p oVirtLiveFiles/iso
 	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
-	livecd-creator -d -v  --config=kickstart/ovirt-live-gnome.ks --cache=/home --fslabel=ovirt-live-el6-master > iso.log 2>&1
+	setenforce 0
+	livecd-creator -d -v  --config=kickstart/ovirt-live-gnome.ks --cache=/home --fslabel=ovirt-live-el6-master 2>&1 | tee iso.log
