@@ -107,8 +107,6 @@ shadow-utils
 apr
 httpd
 ovirt-log-collector
-ovirt-image-uploader
-jboss-as
 
 ## remove some fonts and input methods
 # remove Chinese font (Ming face) (8.9 MB)
