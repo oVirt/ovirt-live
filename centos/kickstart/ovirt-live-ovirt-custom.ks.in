@@ -40,6 +40,11 @@ firefox
 # Useful utils
 vim
 
+# Saving space
+-gthumb
+-totem
+-cheese
+
 %end
 
 ########################################################################
