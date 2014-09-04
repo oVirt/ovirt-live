@@ -11,6 +11,8 @@
 
 #{ ovirt
 #part / --size 4096 --fstype ext4
+# 16GB are needed because the ramdisk running the live instance must have at least
+# 10GB free for the storage domain.
 part / --size 16000 --fstype ext4
 #}
 
