@@ -37,6 +37,7 @@ ovirt-log-collector
 # oVirt Live scripts
 yad
 firefox
+spice-xpi
 
 # Useful utils
 vim
