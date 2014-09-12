@@ -62,6 +62,7 @@ cp -r oVirtLiveFiles $INSTALL_ROOT/root/
 
 mkdir -p /home/liveuser/oVirtLiveFiles
 cp -r /root/oVirtLiveFiles /home/liveuser
+yum localinstall -y /home/liveuser/oVirtLiveFiles/rpms/*.rpm
 echo '10.0.0.1 livecd.localdomain localdomain' >> /etc/hosts
 
 #workaround for bz 878119
