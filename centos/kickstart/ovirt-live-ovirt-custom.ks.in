@@ -78,6 +78,7 @@ umask 0027
 cp -r /home/liveuser/oVirtLiveFiles/root/* /
 
 chmod 666 /etc/xdg/autostart/engine-setup.desktop
+chmod 664 /etc/sysconfig/network-scripts/{ifcfg,route,rule}*
 
 #setting up wallpaper
 su -c "gconftool-2 -t str -s /desktop/gnome/background/picture_filename /home/liveuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg" - liveuser
