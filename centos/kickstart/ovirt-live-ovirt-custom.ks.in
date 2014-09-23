@@ -11,9 +11,9 @@ device xhci-hcd
 rootpw  ovirt
 
 # oVirt repositories
-repo --name=ovirt34 --baseurl=http://resources.ovirt.org/pub/ovirt-3.4-snapshot/rpm/el$releasever/
-repo --name=ovirt34static --baseurl=http://resources.ovirt.org/pub/ovirt-3.4-snapshot-static/rpm/el$releasever/
-#repo --name=ovirt34 --baseurl=http://resources.ovirt.org/pub/ovirt-3.4/rpm/el$releasever/
+#repo --name=ovirt34 --baseurl=http://resources.ovirt.org/pub/ovirt-3.4-snapshot/rpm/el$releasever/
+#repo --name=ovirt34static --baseurl=http://resources.ovirt.org/pub/ovirt-3.4-snapshot-static/rpm/el$releasever/
+repo --name=ovirt34 --baseurl=http://resources.ovirt.org/pub/ovirt-3.4/rpm/el$releasever/
 #repo --name=ovirt34rc --baseurl=http://resources.ovirt.org/pub/ovirt-3.4-rc/rpm/el$releasever/
 repo --name=gluster --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/$basearch/
 repo --name=glusternoarch --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/noarch
