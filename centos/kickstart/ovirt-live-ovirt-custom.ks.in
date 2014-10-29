@@ -16,7 +16,6 @@ repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-master-sn
 repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-6-$basearch/
 repo --name=gluster --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/$basearch/
 repo --name=glusternoarch --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/noarch
-repo --name=local --baseurl=file://@PATH@/oVirtLiveFiles/rpms/
 
 ########################################################################
 # Include kickstart files
@@ -61,7 +60,6 @@ cp -r oVirtLiveFiles $INSTALL_ROOT/root/
 
 mkdir -p /home/liveuser/oVirtLiveFiles
 cp -r /root/oVirtLiveFiles /home/liveuser
-yum localinstall -y /home/liveuser/oVirtLiveFiles/rpms/*.rpm
 echo '10.0.0.1 livecd.localdomain localdomain' >> /etc/hosts
 
 #workaround for bz 878119
