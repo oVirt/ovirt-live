@@ -697,11 +697,21 @@ touch /var/lib/readahead/early.sorted
 sed -i -e 's/hwclock/no-such-hwclock/g' /etc/rc.d/init.d/halt
 
 # import RPM GPG keys
-rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta
-rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
-rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-sl6
-rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-dawson
-rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-sl
+#{ovirt: following keys doesn't exist in ovirt-live
+#rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta
+#rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+#rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-sl6
+#rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-dawson
+#rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-sl
+
+# the following are included:
+
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Security-6
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Testing-6
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Debug-6
+
+#}
 #rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-adobe-linux
 #rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-atrpms
 #rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
