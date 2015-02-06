@@ -1,0 +1,124 @@
+########################################################################
+#
+#  oVirt Project LiveCD customization
+#
+########################################################################
+
+# Ensures that the USB3 driver module is available during boot. Required for
+# booting on USB3 port.
+device xhci-hcd
+
+rootpw  ovirt
+
+# oVirt repositories
+repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot/rpm/el7/
+repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot-static/rpm/el7/
+repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-7-x86_64/
+repo --name=gluster --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-7/x86_64/
+repo --name=glusternoarch --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-7/noarch
+
+########################################################################
+# Include kickstart files
+########################################################################
+
+%include centos-7-livecd.cfg
+
+
+########################################################################
+# Packages
+########################################################################
+
+%packages
+# All in one
+ovirt-engine-setup-plugin-allinone
+ovirt-log-collector
+iptables-services
+
+# oVirt Live scripts
+yad
+spice-xpi
+
+# Useful tools
+wireless-tools
+system-config-keyboard
+system-config-firewall
+
+# Saving space
+-avahi
+-bind-utils
+-cheese
+-ed
+-firewall-config
+-firewalld
+-freerdp
+-gnome-calculator
+-gnome-clocks
+-gnome-color-manager
+-gnome-contacts
+-gnome-documents
+-gnome-font-viewer
+-gnome-icon-theme-extras
+-gnome-icon-theme-legacy
+-gnome-icon-theme-symbolic
+-kexec-tools
+-libaio
+-microcode_ctl
+-nautilus-sendto
+-psacct
+-quota
+-quota-nls
+-rhythmbox
+-setroubleshoot
+-setroubleshoot-plugins
+-setroubleshoot-server
+-smartmontools
+-sushi
+-telepathy-filesystem
+-telepathy-glib
+-telepathy-logger
+-totem
+-tracker
+-vinagre
+-vino
+-yum-rhn-plugin
+
+%end
+
+########################################################################
+# Post installation
+########################################################################
+
+%post --nochroot
+cp -r oVirtLiveFiles $INSTALL_ROOT/root/
+%end
+
+%post
+
+#enabling iptables
+systemctl enable iptables.service
+systemctl start iptables.service
+
+mkdir -p /home/liveuser/oVirtLiveFiles
+cp -r /root/oVirtLiveFiles /home/liveuser
+echo '10.0.0.1 livecd.localdomain localdomain' >> /etc/hosts
+
+#workaround for bz 878119
+sed -i 's/\#WDMDOPTS/WDMDOPTS/g' /etc/sysconfig/wdmd
+
+#configuring autostart
+mkdir -p /home/liveuser/.config/autostart
+
+umask 0027
+
+# Updating patched files
+cp -r /home/liveuser/oVirtLiveFiles/root/* /
+
+chmod 666 /etc/xdg/autostart/engine-setup.desktop
+chmod 664 /etc/sysconfig/network-scripts/{ifcfg,route,rule}*
+
+#setting up wallpaper
+su -c "gconftool-2 -t str -s /desktop/gnome/background/picture_filename /home/liveuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg" - liveuser
+
+sed -i 's/pc-0.14/rhel6.5.0/' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql
+
+%end
