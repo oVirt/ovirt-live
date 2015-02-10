@@ -48,8 +48,6 @@ system-config-firewall
 -bind-utils
 -cheese
 -ed
--firewall-config
--firewalld
 -freerdp
 -gnome-calculator
 -gnome-clocks
