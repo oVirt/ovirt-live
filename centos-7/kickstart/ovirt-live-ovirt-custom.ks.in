@@ -119,4 +119,7 @@ su -c "gconftool-2 -t str -s /desktop/gnome/background/picture_filename /home/li
 
 sed -i 's/pc-0.14/rhel6.5.0/' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql
 
+
+echo "alias dummy0 dummy" >> /etc/modprobe.d/dummy.conf
+
 %end
