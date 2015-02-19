@@ -50,4 +50,4 @@ livecd:		\
 	mkdir -p oVirtLiveFiles/iso
 	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
 	setenforce 0
-	livecd-creator -d -v  --config=kickstart/ovirt-live-ovirt-custom.ks --cache=/home --fslabel=ovirt-live-el6-master 2>&1 | tee iso.log
+	livecd-creator -d -v  --config=kickstart/ovirt-live-ovirt-custom.ks --fslabel=ovirt-live-el6-master 2>&1 | tee iso.log
