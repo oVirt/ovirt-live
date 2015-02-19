@@ -36,7 +36,7 @@ iso:
 	wget -N http://distro.ibiblio.org/tinycorelinux/4.x/x86/release/TinyCore-current.iso
 	wget -N http://download.fedoraproject.org/pub/fedora/linux/releases/19/Live/x86_64/Fedora-Live-Desktop-x86_64-19-1.iso
 	if [[ ! -d oVirtLiveFiles/iso ]]; then
-            mkdir oVirtLiveFiles/iso 
+            mkdir oVirtLiveFiles/iso
         fi
 	mv -f *.iso oVirtLiveFiles/iso
 
@@ -64,7 +64,6 @@ nightly-iso:
 
 	livecd-creator -d -v  \
             --config=kickstart/ovirt.ks \
-            --cache=/home \
             --fslabel=$(NAME)-$(VERSION)-$(RELEASE) \
 		> $(NAME)-$(VERSION)-$(RELEASE).$(SUFFIX).log 2>&1
 	mv $(NAME)-$(VERSION)-$(RELEASE).iso $(NAME)-$(VERSION)-$(RELEASE).$(SUFFIX).iso
