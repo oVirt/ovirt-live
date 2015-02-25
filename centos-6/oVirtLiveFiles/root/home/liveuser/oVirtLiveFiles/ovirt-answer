@@ -33,3 +33,4 @@ OVESETUP_AIO/configure=bool:True
 OVESETUP_AIO/storageDomainDir=str:/var/lib/images
 OVESETUP_AIO/rootPassword=str:ovirt
 OVESETUP_AIO/storageDomainName=str:local_storage
+OVESETUP_CONFIG/sanWipeAfterDelete=bool:False
