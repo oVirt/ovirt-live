@@ -34,8 +34,8 @@ downloads/TinyCore-current.iso:
 packages:
 	rpm -ql livecd-tools > /dev/null 2>&1 || \
 		yum install -y \
-		http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/livecd-tools-20.1-2.el7.x86_64.rpm \
-		http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/python-imgcreate-20.1-2.el7.x86_64.rpm \
+		http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/livecd-tools-20.1-3.el7.x86_64.rpm \
+		http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/python-imgcreate-20.1-3.el7.x86_64.rpm \
 		http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/hfsplus-tools-540.1.linux3-4.el7.x86_64.rpm
 
 

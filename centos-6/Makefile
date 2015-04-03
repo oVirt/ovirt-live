@@ -29,7 +29,7 @@ _download:
 	mv "downloads/$(OUT).tmp" "downloads/$(OUT)"
 
 downloads/TinyCore-current.iso:
-	$(MAKE) _download URL="http://distro.ibiblio.org/tinycorelinux/4.x/x86/release/TinyCore-current.iso" OUT="TinyCore-current.iso"
+	$(MAKE) _download URL="http://distro.ibiblio.org/tinycorelinux/6.x/x86/release/TinyCore-current.iso" OUT="TinyCore-current.iso"
 
 packages:
 	rpm -ql epel-release > /dev/null 2>&1 || yum install -y http://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
@@ -50,4 +50,4 @@ livecd:		\
 	mkdir -p oVirtLiveFiles/iso
 	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
 	setenforce 0
-	livecd-creator -d -v  --config=kickstart/ovirt-live-ovirt-custom.ks --fslabel=ovirt-live-el6-master 2>&1 | tee iso.log
+	livecd-creator -d -v  --config=kickstart/ovirt-live-ovirt-custom.ks --fslabel=ovirt-live-el6-master.$(shell date -u +%y%m%d%H%M) 2>&1 | tee iso.log
