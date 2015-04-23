@@ -1,7 +1,0 @@
-DEVICE=dummy0
-BRIDGE=ovirtmgmt
-ONBOOT=yes
-MTU=1500
-NM_CONTROLLED=no
-HOTPLUG=no
-PROMISC=yes

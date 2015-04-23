@@ -1,7 +1,0 @@
-*.tmp
-*.log
-
-oVirtLiveFiles/iso
-downloads
-repo
-kickstart/ovirt-live-base.ks
