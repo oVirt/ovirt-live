@@ -38,6 +38,8 @@ iptables-services
 # oVirt Live scripts
 yad
 spice-xpi
+ovirt-live-artwork
+ovirt-live-artwork-gnome
 
 # Useful tools
 wireless-tools
@@ -114,9 +116,6 @@ cp -r /home/liveuser/oVirtLiveFiles/root/* /
 
 chmod 666 /etc/xdg/autostart/engine-setup.desktop
 chmod 664 /etc/sysconfig/network-scripts/{ifcfg,route,rule}*
-
-#setting up wallpaper
-su -c "gconftool-2 -t str -s /desktop/gnome/background/picture_filename /home/liveuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg" - liveuser
 
 sed -i 's/pc-0.14/rhel6.5.0/' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql
 
