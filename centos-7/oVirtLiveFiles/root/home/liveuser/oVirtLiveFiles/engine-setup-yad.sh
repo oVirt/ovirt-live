@@ -1,7 +1,7 @@
 #! /bin/bash
-# TODO
 
-gconftool-2 -t str -s /desktop/gnome/background/picture_filename /home/liveuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg
+gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/oVirtLive/default/oVirtLive.xml"
+
 if ! ifconfig ovirtmgmt 2> /dev/null | grep -q 'inet addr'; then
     # network wasn't correctly configured. Attempt to configure.
     # Probably left over workaround from earlier releases.
