@@ -1,0 +1,16 @@
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache/
+config.log
+config.status
+configure
+install-sh
+missing
+ovirt-live-artwork.spec
+ovirt-live-artwork-*.tar.gz
+pixmaps/Makefile
+pixmaps/Makefile.in
+wallpapers/Makefile
+wallpapers/Makefile.in
+
