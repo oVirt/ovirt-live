@@ -1,0 +1,5 @@
+autoconf
+automake
+make
+pyflakes
+python-pep8
