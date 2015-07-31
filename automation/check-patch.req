@@ -1,5 +1,6 @@
 autoconf
 automake
+gettext-devel
 make
 pyflakes
 python-pep8

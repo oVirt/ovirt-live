@@ -1,6 +1,6 @@
 #
-# ovirt-engine-setup -- ovirt engine setup
-# Copyright (C) 2013 Red Hat, Inc.
+# ovirt-engine-setup -- oVirt Live
+# Copyright (C) 2015 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,21 +15,10 @@
 # limitations under the License.
 #
 
+MAINTAINERCLEANFILES = \
+	$(srcdir)/Makefile.in \
+	$(NULL)
 
-"""
-ovirt-host-setup ovirtLive plugin.
-"""
-
-
-from otopi import util
-
-
-from . import core
-
-
-@util.export
-def createPlugins(context):
-    core.Plugin(context=context)
-
-
-# vim: expandtab tabstop=4 shiftwidth=4
+SUBDIRS = \
+	ovirt_live \
+	$(NULL)

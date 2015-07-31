@@ -1,0 +1,16 @@
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache/
+config.log
+config.status
+configure
+install-sh
+missing
+config.rpath
+ABOUT-NLS
+intl
+m4
+py-compile
+ovirt-engine-setup-plugin-live.spec
+ovirt-engine-setup-plugin-live-*.tar.gz

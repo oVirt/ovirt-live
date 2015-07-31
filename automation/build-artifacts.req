@@ -1,5 +1,6 @@
-yum-utils
 autoconf
 automake
-make
+gettext-devel
 git
+make
+yum-utils

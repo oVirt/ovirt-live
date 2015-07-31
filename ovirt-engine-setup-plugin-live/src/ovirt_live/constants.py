@@ -1,6 +1,6 @@
 #
-# ovirt-engine-setup -- ovirt engine setup
-# Copyright (C) 2013 Red Hat, Inc.
+# ovirt-engine-setup -- oVirt Live
+# Copyright (C) 2013-2015 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,8 +15,12 @@
 # limitations under the License.
 #
 
+
+"""oVirt Live Constants"""
+
+
 import gettext
-_ = lambda m: gettext.dgettext(message=m, domain='ovirt-engine-setup')
+_ = lambda m: gettext.dgettext(message=m, domain='ovirt-live')
 
 
 from otopi import util

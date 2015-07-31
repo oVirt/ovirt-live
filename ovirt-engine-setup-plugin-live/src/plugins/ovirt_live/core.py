@@ -1,6 +1,6 @@
 #
-# ovirt-engine-setup -- ovirt engine setup
-# Copyright (C) 2013 Red Hat, Inc.
+# ovirt-engine-setup -- oVirt Live
+# Copyright (C) 2013-2015 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 
 """
-oVirtLive plugin.
+oVirt Live plugin.
 """
 
 import time
@@ -30,22 +30,20 @@ _ = lambda m: gettext.dgettext(message=m, domain='ovirt-engine-setup')
 
 from otopi import util
 from otopi import plugin
-from otopi import filetransaction
-from otopi import constants as otopicons
-
-
-import oliveconst
 
 
 from ovirt_engine_setup import util as osetuputil
 from ovirt_engine_setup import constants as osetupcons
-from ovirt_engine_setup import dialog
+from ovirt_engine_setup.engine import constants as oenginecons
+from ovirt_engine_setup.engine_common import constants as oengcommcon
+
+from ovirt_engine_setup.ovirt_live import constants as oliveconst
 
 
 @util.export
 class Plugin(plugin.PluginBase):
     """
-    oVirtLive plugin.
+    oVirt Live plugin.
     """
 
     def __init__(self, context):
@@ -90,30 +88,26 @@ class Plugin(plugin.PluginBase):
             oliveconst.Stages.CONFIG_STORAGE,
         ),
         after=(
-            osetupcons.Stages.AIO_CONFIG_VDSM,
+            oenginecons.Stages.AIO_CONFIG_VDSM,
         ),
     )
     def _initapi(self):
         self._engine_api = self._ovirtsdk_api.API(
             url='https://{fqdn}:{port}/api'.format(
                 fqdn=self.environment[osetupcons.ConfigEnv.FQDN],
-                port=self.environment[osetupcons.ConfigEnv.PUBLIC_HTTPS_PORT],
+                port=self.environment[oengcommcon.ConfigEnv.PUBLIC_HTTPS_PORT],
             ),
-            username='{user}@{domain}'.format(
-                user=osetupcons.Const.USER_ADMIN,
-                domain=osetupcons.Const.DOMAIN_INTERNAL,
+            username='{user}'.format(
+                user=self.environment[oenginecons.ConfigEnv.ADMIN_USER],
             ),
-            password=self.environment[osetupcons.ConfigEnv.ADMIN_PASSWORD],
-            ca_file=osetupcons.FileLocations.OVIRT_ENGINE_PKI_ENGINE_CA_CERT,
+            password=self.environment[oenginecons.ConfigEnv.ADMIN_PASSWORD],
+            ca_file=oenginecons.FileLocations.OVIRT_ENGINE_PKI_ENGINE_CA_CERT,
         )
 
     @plugin.event(
         stage=plugin.Stages.STAGE_CLOSEUP,
         condition=lambda self: self._enabled,
         name=oliveconst.Stages.CONFIG_STORAGE,
-        before=(
-            oliveconst.Stages.COPY_ISO,
-        ),
         after=(
             oliveconst.Stages.INIT,
         ),
@@ -128,46 +122,49 @@ class Plugin(plugin.PluginBase):
         ).storagedomains.add(
             self._engine_api.storagedomains.get(
                 self.environment[
-                   oliveconst.IsoEnv.ISO_NAME
+                    oliveconst.IsoEnv.ISO_NAME
                 ]
             )
         )
 
     @plugin.event(
-        stage=plugin.Stages.STAGE_CLOSEUP,
-        condition=lambda self: self._enabled,
+        stage=plugin.Stages.STAGE_MISC,
+        condition=lambda self: (
+            self._enabled and
+            self.environment[oenginecons.ConfigEnv.ISO_DOMAIN_EXISTS]
+        ),
         name=oliveconst.Stages.COPY_ISO,
         before=(
             oliveconst.Stages.CREATE_VM,
         ),
         after=(
-            oliveconst.Stages.CONFIG_STORAGE,
+            oenginecons.Stages.CONFIG_ISO_DOMAIN_AVAILABLE,
         ),
     )
     def _copyiso(self):
         self.logger.debug('Copying Iso Files')
-        fileList = glob.glob('/home/oVirtuser/oVirtLiveFiles/iso/*.iso')
         targetPath = os.path.join(
             self.environment[
-                osetupcons.ConfigEnv.ISO_DOMAIN_NFS_MOUNT_POINT
+                oenginecons.ConfigEnv.ISO_DOMAIN_NFS_MOUNT_POINT
             ],
             self.environment[
-                osetupcons.ConfigEnv.ISO_DOMAIN_SD_UUID
+                oenginecons.ConfigEnv.ISO_DOMAIN_SD_UUID
             ],
             'images',
-            osetupcons.Const.ISO_DOMAIN_IMAGE_UID
+            oenginecons.Const.ISO_DOMAIN_IMAGE_UID
         )
         self.logger.debug('target path' + targetPath)
-        for filename in fileList:
+        # FIXME don't hardcode paths
+        for filename in glob.glob('/home/liveuser/oVirtLiveFiles/iso/*.iso'):
             self.logger.debug(filename)
             shutil.move(filename, targetPath)
             os.chown(
                 os.path.join(targetPath, os.path.basename(filename)),
                 osetuputil.getUid(
-                        osetupcons.Defaults.DEFAULT_SYSTEM_USER_VDSM
+                    oengcommcon.Defaults.DEFAULT_SYSTEM_USER_VDSM
                 ),
                 osetuputil.getGid(
-                        osetupcons.Defaults.DEFAULT_SYSTEM_GROUP_KVM
+                    oengcommcon.Defaults.DEFAULT_SYSTEM_GROUP_KVM
                 )
             )
 
@@ -176,35 +173,31 @@ class Plugin(plugin.PluginBase):
         condition=lambda self: self._enabled,
         name=oliveconst.Stages.CREATE_VM,
         after=(
-            oliveconst.Stages.COPY_ISO,
+            oliveconst.Stages.INIT,
         ),
     )
     def _createvm(self):
-        # Defins OS param for the boot option
         params = self._ovirtsdk_xml.params
-        os = params.OperatingSystem(
-            type_='unassigned',
-            boot=(
-                params.Boot(dev='cdrom'),
-                params.Boot(dev='hd'),
-            ),
-        )
         MB = 1024*1024
         GB = 1024*MB
 
-        # Create VM
         vm = self._engine_api.vms.add(
             params.VM(
                 name='local_vm',
                 memory=1*GB,
-                os=os,
+                os=params.OperatingSystem(
+                    type_='unassigned',
+                    boot=(
+                        params.Boot(dev='cdrom'),
+                        params.Boot(dev='hd'),
+                    ),
+                ),
                 cluster=self._engine_api.clusters.get('local_cluster'),
                 template=self._engine_api.templates.get('Blank'),
             ),
         )
 
-        # Create NIC
-        self._engine_api.vms.get('local_vm').nics.add(
+        vm.nics.add(
             params.NIC(
                 name='eth0',
                 network=params.Network(name='ovirtmgmt'),
@@ -212,22 +205,20 @@ class Plugin(plugin.PluginBase):
             ),
         )
 
-        diskParam = params.Disk(
-            storage_domains=params.StorageDomains(
-                storage_domain=(
-                    self._engine_api.storagedomains.get('local_storage'),
+        vm.disks.add(
+            params.Disk(
+                storage_domains=params.StorageDomains(
+                    storage_domain=(
+                        self._engine_api.storagedomains.get('local_storage'),
+                    ),
                 ),
+                size=6*GB,
+                type_='data',
+                interface='virtio',
+                format='cow',
+                bootable=True,
             ),
-            size=6*GB,
-            type_='data',
-            interface='virtio',
-            format='cow',
-            bootable=True,
         )
-
-        self._engine_api.vms.get(
-            'local_vm'
-        ).disks.add(diskParam)
 
 
 # vim: expandtab tabstop=4 shiftwidth=4
