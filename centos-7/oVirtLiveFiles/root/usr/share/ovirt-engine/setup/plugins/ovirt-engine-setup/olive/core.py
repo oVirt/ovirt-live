@@ -97,11 +97,10 @@ class Plugin(plugin.PluginBase):
                 fqdn=self.environment[osetupcons.ConfigEnv.FQDN],
                 port=self.environment[oengcommcon.ConfigEnv.PUBLIC_HTTPS_PORT],
             ),
-            username='{user}@{domain}'.format(
-                user=osetupcons.Const.USER_ADMIN,
-                domain=oenginecons.Const.DOMAIN_INTERNAL,
+            username='{user}'.format(
+                user=self.environment[oenginecons.ConfigEnv.ADMIN_USER],
             ),
-            password=self.environment[osetupcons.ConfigEnv.ADMIN_PASSWORD],
+            password=self.environment[oenginecons.ConfigEnv.ADMIN_PASSWORD],
             ca_file=oenginecons.FileLocations.OVIRT_ENGINE_PKI_ENGINE_CA_CERT,
         )
 
