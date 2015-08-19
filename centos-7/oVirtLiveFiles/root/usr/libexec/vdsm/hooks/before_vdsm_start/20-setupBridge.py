@@ -6,13 +6,28 @@ from network import api
 import logging
 
 FORMAT = '%(asctime)-15s::%(message)s'
-logging.basicConfig(filename='/var/log/vdsm/setup-vdsm-net.log', format=FORMAT, level=logging.DEBUG)
+logging.basicConfig(
+    filename='/var/log/vdsm/setup-vdsm-net.log',
+    format=FORMAT,
+    level=logging.DEBUG
+)
 
 NOCHK = {'connectivityCheck': False}
 NET = 'ovirtmgmt'
 NIC = 'dummy0'
 
-res = api.setupNetworks({NET: {'nic': NIC, 'ipaddr': '10.0.0.1', 'netmask': '255.255.255.0', 'gateway': '10.0.0.1'}}, {}, **NOCHK)
+res = api.setupNetworks(
+    {
+        NET: {
+            'nic': NIC,
+            'ipaddr': '10.0.0.1',
+            'netmask': '255.255.255.0',
+            'gateway': '10.0.0.1'
+        }
+    },
+    {},
+    **NOCHK
+)
 logging.debug('setupNetworks: %s', res)
 
 res = api.setSafeNetworkConfig()
