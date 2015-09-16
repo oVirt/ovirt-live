@@ -13,7 +13,7 @@ rootpw  ovirt
 # oVirt repositories
 #repo --name=ovirt35 --baseurl=http://resources.ovirt.org/pub/ovirt-3.5-snapshot/rpm/el$releasever/
 #repo --name=ovirt35static --baseurl=http://resources.ovirt.org/pub/ovirt-3.5-snapshot-static/rpm/el$releasever/
-#repo --name=ovirt-3.5-pre --baseurl=http://resources.ovirt.org/pub/ovirt-3.5-pre/rpm/el$releasever/
+repo --name=ovirt-3.5-pre --baseurl=http://resources.ovirt.org/pub/ovirt-3.5-pre/rpm/el$releasever/
 repo --name=ovirt-3.5 --baseurl=http://resources.ovirt.org/pub/ovirt-3.5/rpm/el$releasever/
 repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-6-$basearch/
 repo --name=gluster --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-$releasever/$basearch/
