@@ -51,7 +51,10 @@ echo "Excecuting $cmd"
 if $cmd; then
     echo "Setup ended successfully"
     rm -f $HOME/.config/autostart/engine-setup.desktop
-    yad --text "Setup ended successfully\nopening oVirt now on https://localhost.localdomain" --button="gtk-ok:0"
-    firefox https://localhost.localdomain &
+    . /usr/share/ovirt-engine/bin/engine-prolog.sh
+    yad --text "Setup ended successfully\nopening oVirt now on https://${ENGINE_FQDN}" --button="gtk-ok:0"
+    firefox -CreateProfile default
+    certutil -A -n oVirt-Live -t 'TCu,Cuw,Tuw' -i /etc/pki/ovirt-engine/ca.pem -d ~/.mozilla/firefox/*.default
+    firefox https://${ENGINE_FQDN} &
     exit 0
 fi
