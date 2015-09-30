@@ -30,6 +30,22 @@ BuildArch:      noarch
 %description
 oVirt Live Artworks
 
+%package        gnome
+Summary:        oVirt Live default wallpaper for Gnome and Cinnamon
+Requires:       %{name} = %{version}-%{release}
+
+%description    gnome
+This package contains Gnome/Cinnamon desktop wallpaper for the
+oVirt Live default theme.
+
+%package        mate
+Summary:        oVirt Live default wallpaper for Mate
+Requires:       %{name} = %{version}-%{release}
+
+%description    mate
+This package contains Mate desktop wallpaper for the oVirt Live
+default theme.
+
 %prep
 %setup -q -n %{name}-%{package_version}
 
@@ -43,18 +59,30 @@ make %{?_smp_mflags}
 %make_install
 
 %files
-%dir %{_datadir}/pixmaps/oVirtLive
-%dir %{_datadir}/wallpapers/oVirtLive
-%{_datadir}/pixmaps/oVirtLive/*
-%{_datadir}/wallpapers/oVirtLive/*
-
 %doc README.md
-%if 0%{?rhel} && 0%{?rhel} <= 6
-%doc COPYING NOTICE
-%else
 # See https://fedoraproject.org/wiki/Changes/Use_license_macro_in_RPMs_for_packages_in_Cloud_Image
 %license COPYING NOTICE
-%endif
+%dir %{_datadir}/pixmaps/oVirtLive
+%{_datadir}/pixmaps/oVirtLive/*
+%dir %{_datadir}/backgrounds/oVirtLive
+%dir %{_datadir}/backgrounds/oVirtLive/default
+%{_datadir}/backgrounds/oVirtLive/default/normalish
+%{_datadir}/backgrounds/oVirtLive/default/standard
+%{_datadir}/backgrounds/oVirtLive/default/wide
+%{_datadir}/backgrounds/oVirtLive/default/tv-wide
+%{_datadir}/backgrounds/oVirtLive/default/oVirtLive.xml
+
+%files gnome
+%doc README.md
+# See https://fedoraproject.org/wiki/Changes/Use_license_macro_in_RPMs_for_packages_in_Cloud_Image
+%license COPYING NOTICE
+%{_datadir}/gnome-background-properties/oVirtLive.xml
+
+%files mate
+%doc README.md
+# See https://fedoraproject.org/wiki/Changes/Use_license_macro_in_RPMs_for_packages_in_Cloud_Image
+%license COPYING NOTICE
+%{_datadir}/mate-background-properties/oVirtLive.xml
 
 
 %changelog
