@@ -19,8 +19,14 @@ AM_INIT_AUTOMAKE([foreign])
 
 AC_CONFIG_FILES([
 	Makefile
+	ovirt-live-artwork.spec
 	pixmaps/Makefile
 	wallpapers/Makefile
-	ovirt-live-artwork.spec
+	wallpapers/gnome/Makefile
+	wallpapers/mate/Makefile
+	wallpapers/normalish/Makefile
+	wallpapers/standard/Makefile
+	wallpapers/tv-wide/Makefile
+	wallpapers/wide/Makefile
 ])
 AC_OUTPUT

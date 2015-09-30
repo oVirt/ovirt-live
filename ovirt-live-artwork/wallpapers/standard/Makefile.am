@@ -13,18 +13,9 @@
 # limitations under the License.
 #
 
-SUBDIRS = \
-	gnome \
-	mate \
-	normalish \
-	standard \
-	tv-wide \
-	wide \
+standardwallpapersdir=$(datadir)/backgrounds/oVirtLive/default/standard
+
+dist_standardwallpapers_DATA = \
+	oVirtLive.jpg \
 	$(NULL)
 
-wallpapersdir=$(datadir)/backgrounds/oVirtLive
-
-defaultwallpapersdir=$(wallpapersdir)/default
-dist_defaultwallpapers_DATA = \
-	oVirtLive.xml \
-	$(NULL)
