@@ -1,6 +1,6 @@
 #
 # ovirt-engine-setup -- oVirt Live
-# Copyright (C) 2015-2016 Red Hat, Inc.
+# Copyright (C) 2013-2015 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,11 +15,31 @@
 # limitations under the License.
 #
 
-MAINTAINERCLEANFILES = \
-	$(srcdir)/Makefile.in \
-	$(NULL)
 
-SUBDIRS = \
-	all-in-one \
-	ovirt_live \
-	$(NULL)
+"""
+ovirt-host-setup all-in-one plugin.
+"""
+
+
+from otopi import util
+
+
+from . import core
+from . import cpu
+from . import firewall
+from . import sshd
+from . import storage
+from . import vdsmi
+
+
+@util.export
+def createPlugins(context):
+    core.Plugin(context=context)
+    cpu.Plugin(context=context)
+    firewall.Plugin(context=context)
+    sshd.Plugin(context=context)
+    storage.Plugin(context=context)
+    vdsmi.Plugin(context=context)
+
+
+# vim: expandtab tabstop=4 shiftwidth=4

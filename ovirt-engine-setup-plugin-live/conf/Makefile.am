@@ -20,6 +20,5 @@ MAINTAINERCLEANFILES = \
 	$(NULL)
 
 SUBDIRS = \
-	all-in-one \
-	ovirt_live \
+	ovirt-host-deploy \
 	$(NULL)

@@ -1,6 +1,6 @@
 #
 # ovirt-engine-setup -- oVirt Live
-# Copyright (C) 2015-2016 Red Hat, Inc.
+# Copyright (C) 2015 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,11 +15,27 @@
 # limitations under the License.
 #
 
+include $(top_srcdir)/build/python.inc
+
 MAINTAINERCLEANFILES = \
 	$(srcdir)/Makefile.in \
 	$(NULL)
 
-SUBDIRS = \
-	all-in-one \
-	ovirt_live \
+allinonedir=$(ovirtliveplugindir)/all-in-one
+dist_allinone_PYTHON = \
+	core.py \
+	cpu.py \
+	firewall.py \
+	__init__.py \
+	sshd.py \
+	storage.py \
+	vdsmi.py \
+	$(NULL)
+
+clean-local: \
+	python-clean \
+	$(NULL)
+
+all-local: \
+	python-syntax-check \
 	$(NULL)

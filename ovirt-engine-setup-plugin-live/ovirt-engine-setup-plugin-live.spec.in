@@ -1,6 +1,6 @@
 #
 # ovirt-engine-setup -- oVirt Live
-# Copyright (C) 2015 Red Hat, Inc.
+# Copyright (C) 2015-2016 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,6 +30,14 @@ Source0:        http://resources.ovirt.org/pub/ovirt-master-snapshot/src/%{name}
 BuildArch:      noarch
 
 Requires:       ovirt-engine >= %{version}
+Requires:       ovirt-engine-sdk-python >= 4.0.0.0
+Requires:       ovirt-engine-setup-plugin-ovirt-engine >= %{version}
+
+Requires:       gettext
+Requires:       openssh-server
+Requires:       ovirt-host-deploy >= 1.4.0
+Requires:       ovirt-host-deploy-offline >= 1.4.0
+Requires:       vdsm-jsonrpc-java >= 1.1.4
 
 %description
 oVirt Live Setup Plugins
@@ -47,8 +55,12 @@ make %{?_smp_mflags}
 %make_install
 
 %files
+%{_datadir}/ovirt-engine/firewalld/ovirt-engine/ovirt-aio.xml.in
 %{_datadir}/ovirt-engine/setup/ovirt_engine_setup/ovirt_live/
-%{_datadir}/ovirt-engine/setup/plugins/ovirt-engine-setup/ovirt_live/
+%{_datadir}/ovirt-engine/setup/plugins/ovirt-engine-setup/ovirt-engine/all-in-one/
+%{_datadir}/ovirt-engine/setup/plugins/ovirt-engine-setup/ovirt-engine/ovirt_live/
+%config %{_sysconfdir}/ovirt-host-deploy.conf.d/10-packaging-aio.conf
+
 
 %doc README.md
 %if 0%{?rhel} && 0%{?rhel} <= 6

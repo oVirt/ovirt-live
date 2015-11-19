@@ -19,7 +19,14 @@ AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_SRCDIR([src/Makefile.am])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([1.9 tar-pax])
-AM_GNU_GETTEXT_VERSION([0.17])
+dnl Fallback definition for gettext.m4 older than 0.19.6.
+m4_ifndef([AM_GNU_GETTEXT_REQUIRE_VERSION], [m4_define([AM_GNU_GETTEXT_REQUIRE_VERSION])], [])
+dnl Prefer the latest infrastructure, given it is newer than 0.18.2.
+AM_GNU_GETTEXT_REQUIRE_VERSION([0.18.2])
+
+dnl This will be ignored if the installed autopoint supports
+dnl AM_GNU_GETTEXT_REQUIRE_VERSION.
+AM_GNU_GETTEXT_VERSION([0.18.2])
 AM_PO_SUBDIRS
 
 AC_ARG_ENABLE(
@@ -38,19 +45,29 @@ AM_PATH_PYTHON([2.6],, [AC_MSG_ERROR([Cannot find python])])
 
 AM_CONDITIONAL([PYTHON_SYNTAX_CHECK], [test "${enable_python_syntax_check}" = "yes"])
 
+ovirtenginesetupconfdir="\$(sysconfdir)/ovirt-engine-setup.conf.d"
+ovirthostdeployconfdir="\$(sysconfdir)/ovirt-host-deploy.conf.d"
 ovirtlivelibdir="\$(datadir)/ovirt-engine/setup/ovirt_engine_setup/ovirt_live"
-ovirtliveplugindir="\$(datadir)/ovirt-engine/setup/plugins/ovirt-engine-setup"
+ovirtliveplugindir="\$(datadir)/ovirt-engine/setup/plugins/ovirt-engine-setup/ovirt-engine"
+ovirtlivefirewalldtemplatesdir="\$(datadir)/ovirt-engine/firewalld/ovirt-engine"
 AC_SUBST([ovirtlivelibdir])
 AC_SUBST([ovirtliveplugindir])
+AC_SUBST([ovirtlivefirewalldtemplatesdir])
+AC_SUBST([ovirtenginesetupconfdir])
+AC_SUBST([ovirthostdeployconfdir])
 
 AC_CONFIG_FILES([
 	Makefile
-	build/Makefile
-	po/Makefile.in
-	src/Makefile
-	src/ovirt_live/Makefile
-	src/plugins/Makefile
-	src/plugins/ovirt_live/Makefile
+        build/Makefile
+        conf/Makefile
+        conf/ovirt-host-deploy/Makefile
+        firewalld/Makefile
+        po/Makefile.in
+        src/Makefile
+        src/ovirt_live/Makefile
+        src/plugins/all-in-one/Makefile
+        src/plugins/Makefile
+        src/plugins/ovirt_live/Makefile
 	ovirt-engine-setup-plugin-live.spec
 ])
 AC_OUTPUT

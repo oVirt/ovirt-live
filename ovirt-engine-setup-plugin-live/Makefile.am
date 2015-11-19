@@ -36,6 +36,8 @@ CLEANFILES = \
 
 SUBDIRS = \
 	build \
+	conf \
+	firewalld \
 	po \
 	src \
 	$(NULL)

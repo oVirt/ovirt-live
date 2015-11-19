@@ -20,6 +20,7 @@
 
 
 import gettext
+import os
 
 from otopi import util
 from ovirt_engine_setup import constants as osetupcons
@@ -30,20 +31,55 @@ def _(m):
 
 
 @util.export
+class FileLocations(object):
+    DATADIR = '/usr/share'
+    LOCALSTATEDIR = '/var'
+
+    AIO_VDSM_PATH = os.path.join(
+        DATADIR,
+        'vdsm',
+    )
+    AIO_STORAGE_DOMAIN_DEFAULT_DIR = os.path.join(
+        LOCALSTATEDIR,
+        'lib',
+        'images',
+    )
+    AIO_POST_INSTALL_CONFIG = os.path.join(
+        '%s.d' % osetupcons.FileLocations.OVIRT_OVIRT_SETUP_CONFIG_FILE,
+        '20-setup-aio.conf'
+    )
+
+
+@util.export
 class Stages(object):
     CONFIG_STORAGE = 'ovirtlivesetup.core.core.configstorage'
     COPY_ISO = 'ovirtlivesetup.core.copy.iso'
     CREATE_VM = 'ovirtlivesetup.core.create.vm'
     INIT = 'ovirtlivesetup.core.init'
 
+    AIO_CONFIG_AVAILABLE = 'osetup.aio.config.available'
+    AIO_CONFIG_NOT_AVAILABLE = 'osetup.aio.config.not.available'
+    AIO_CONFIG_STORAGE = 'osetup.aio.config.storage'
+    AIO_CONFIG_SSH = 'osetup.aio.config.ssh'
+    AIO_CONFIG_VDSM = 'osetup.aio.config.vdsm'
+
 
 @util.export
 @util.codegen
 @osetupcons.osetupattrsclass
 class CoreEnv(object):
-    ENABLE = 'OVESETUP_OVIRTLIVE/enable'
+    ENABLE = 'OVESETUP_AIO/enable'
 
-    CONFIGURE = 'OVESETUP_OL/configure'
+    @osetupcons.osetupattrs(
+        answerfile=True,
+        summary=True,
+        description=_('Configure VDSM on this host'),
+    )
+    def CONFIGURE(self):
+        return 'OVESETUP_AIO/configure'
+
+    CONTINUE_WITHOUT_AIO = 'OVESETUP_AIO/continueWithoutAIO'
+
     LOCAL_DATA_CENTER = 'OVESETUP_AIO/localDataCenter'
     LOCAL_CLUSTER = 'OVESETUP_AIO/localCluster'
     LOCAL_HOST = 'OVESETUP_AIO/localHost'
@@ -60,7 +96,17 @@ class CoreEnv(object):
     def STORAGE_DOMAIN_DIR(self):
         return 'OVESETUP_AIO/storageDomainDir'
 
-    STORAGE_DOMAIN_NAME = 'OVESETUP_AIO/storageDomainName'
+    @osetupcons.osetupattrs(
+        answerfile=True,
+        summary=False,
+        description=_('Local storage domain name'),
+    )
+    def STORAGE_DOMAIN_NAME(self):
+        return 'OVESETUP_AIO/storageDomainName'
+
+    SUPPORTED = 'OVESETUP_AIO/supported'
+    SSHD_PORT = 'OVESETUP_AIO/sshdPort'
+    DEFAULT_SSH_PORT = 22
 
 
 @util.export

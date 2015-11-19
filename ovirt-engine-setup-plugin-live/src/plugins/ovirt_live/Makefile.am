@@ -21,8 +21,8 @@ MAINTAINERCLEANFILES = \
 	$(srcdir)/Makefile.in \
 	$(NULL)
 
-mydir=$(ovirtliveplugindir)/ovirt_live
-dist_my_PYTHON = \
+ovirtlivedir=$(ovirtliveplugindir)/ovirt_live
+dist_ovirtlive_PYTHON = \
 	__init__.py \
 	core.py \
 	$(NULL)

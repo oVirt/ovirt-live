@@ -84,12 +84,12 @@ class Plugin(plugin.PluginBase):
             oliveconst.Stages.CONFIG_STORAGE,
         ),
         after=(
-            oenginecons.Stages.AIO_CONFIG_VDSM,
+            oliveconst.Stages.AIO_CONFIG_VDSM,
         ),
     )
     def _initapi(self):
         self._engine_api = self._ovirtsdk_api.API(
-            url='https://{fqdn}:{port}/api'.format(
+            url='https://{fqdn}:{port}/ovirt-engine/api'.format(
                 fqdn=self.environment[osetupcons.ConfigEnv.FQDN],
                 port=self.environment[oengcommcon.ConfigEnv.PUBLIC_HTTPS_PORT],
             ),
@@ -178,14 +178,15 @@ class Plugin(plugin.PluginBase):
         GB = 1024 * MB
 
         vm = self._engine_api.vms.add(
-            params.VM(
+            params.Vm(
                 name='local_vm',
                 memory=1 * GB,
                 os=params.OperatingSystem(
                     type_='unassigned',
-                    boot=(
-                        params.Boot(dev='cdrom'),
-                        params.Boot(dev='hd'),
+                    boot=params.Boot(
+                        devices=params.devicesType(
+                            device=['cdrom', 'hd'],
+                        )
                     ),
                 ),
                 cluster=self._engine_api.clusters.get('local_cluster'),
@@ -194,7 +195,7 @@ class Plugin(plugin.PluginBase):
         )
 
         vm.nics.add(
-            params.NIC(
+            params.Nic(
                 name='eth0',
                 network=params.Network(name='ovirtmgmt'),
                 interface='virtio',
@@ -208,8 +209,7 @@ class Plugin(plugin.PluginBase):
                         self._engine_api.storagedomains.get('local_storage'),
                     ),
                 ),
-                size=6 * GB,
-                type_='data',
+                provisioned_size=6 * GB,
                 interface='virtio',
                 format='cow',
                 bootable=True,
