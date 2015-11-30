@@ -178,13 +178,13 @@ class Plugin(plugin.PluginBase):
     )
     def _createvm(self):
         params = self._ovirtsdk_xml.params
-        MB = 1024*1024
-        GB = 1024*MB
+        MB = 1024 * 1024
+        GB = 1024 * MB
 
         vm = self._engine_api.vms.add(
             params.VM(
                 name='local_vm',
-                memory=1*GB,
+                memory=1 * GB,
                 os=params.OperatingSystem(
                     type_='unassigned',
                     boot=(
@@ -212,7 +212,7 @@ class Plugin(plugin.PluginBase):
                         self._engine_api.storagedomains.get('local_storage'),
                     ),
                 ),
-                size=6*GB,
+                size=6 * GB,
                 type_='data',
                 interface='virtio',
                 format='cow',
