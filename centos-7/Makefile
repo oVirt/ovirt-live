@@ -32,11 +32,11 @@ downloads/TinyCore-current.iso:
 	$(MAKE) _download URL="http://distro.ibiblio.org/tinycorelinux/6.x/x86/release/TinyCore-current.iso" OUT="TinyCore-current.iso"
 
 packages:
-	rpm -ql livecd-tools > /dev/null 2>&1 || \
+	rpm -ql livecd-tools-21.4 > /dev/null 2>&1 || \
 		yum install -y \
-		http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/livecd-tools-20.1-3.el7.x86_64.rpm \
-		http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/python-imgcreate-20.1-3.el7.x86_64.rpm \
-		http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/hfsplus-tools-540.1.linux3-4.el7.x86_64.rpm
+		http://mirror.centos.org/centos-7/7/extras/x86_64/Packages/livecd-tools-21.4-2.el7.x86_64.rpm \
+		http://mirror.centos.org/centos-7/7/extras/x86_64/Packages/python-imgcreate-21.4-2.el7.x86_64.rpm \
+		http://mirror.centos.org/centos-7/7/extras/x86_64/Packages/hfsplus-tools-540.1.linux3-4.el7.x86_64.rpm
 
 
 .SUFFIXES:
