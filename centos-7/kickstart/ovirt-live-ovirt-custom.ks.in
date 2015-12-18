@@ -11,10 +11,10 @@ device xhci-hcd
 rootpw  ovirt
 
 # oVirt repositories
-#repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-3.6-snapshot/rpm/el7/
-#repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-3.6-snapshot-static/rpm/el7/
+repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-3.6-snapshot/rpm/el7/
+repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-3.6-snapshot-static/rpm/el7/
 #repo --name=ovirt-3.6-pre --baseurl=http://resources.ovirt.org/pub/ovirt-3.6-pre/rpm/el7/
-repo --name=ovirt-3.6 --baseurl=http://resources.ovirt.org/pub/ovirt-3.6/rpm/el7/
+#repo --name=ovirt-3.6 --baseurl=http://resources.ovirt.org/pub/ovirt-3.6/rpm/el7/
 repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-7-x86_64/
 repo --name=gluster --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-7/x86_64/
 repo --name=glusternoarch --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-7/noarch

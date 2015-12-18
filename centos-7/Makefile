@@ -53,8 +53,4 @@ livecd:		\
 	mkdir -p oVirtLiveFiles/iso
 	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
 	setenforce 0
-	livecd-creator -d -v -p --config=kickstart/centos-7-livecd.cfg --fslabel=centos7.2 2>&1 | tee centos.log
-	livecd-creator -d -v -p --config=kickstart/ovirt-live-ovirt-custom.ks -b centos7.2.iso --fslabel=ovirt-live-el7-3.6.1 2>&1 | tee iso.log
-
-
-
+	livecd-creator -d -v -p --config=kickstart/ovirt-live-ovirt-custom.ks --fslabel=ovirt-live-el7-3.6-$(shell date -u +%y%m%d%H%M) 2>&1 | tee iso.log
