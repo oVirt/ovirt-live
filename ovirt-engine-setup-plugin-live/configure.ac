@@ -2,8 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.60])
-define([VERSION_MAJOR], [3])
-define([VERSION_MINOR], [6])
+define([VERSION_MAJOR], [4])
+define([VERSION_MINOR], [0])
 define([VERSION_FIX], [0])
 define([VERSION_NUMBER], VERSION_MAJOR[.]VERSION_MINOR[.]VERSION_FIX)
 define([VERSION_RELEASE], [0.0])
