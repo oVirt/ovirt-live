@@ -94,6 +94,10 @@ system-config-firewall
 # This will also allow to easily modify the size during the boot
 sed -i 's/^  append initrd.*/& rd.live.overlay.size=1024/' $LIVE_ROOT/isolinux/isolinux.cfg
 
+# Enable temporary state mechanism and select some dirs to be mounted as tmpfs
+sed -i s/TEMPORARY_STATE=no/TEMPORARY_STATE=yes/ $INSTALL_ROOT/etc/sysconfig/readonly-root
+echo "dirs   /var/lib/pgsql" >> $INSTALL_ROOT/etc/rwtab
+
 cp -r oVirtLiveFiles $INSTALL_ROOT/root/
 %end
 
