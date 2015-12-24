@@ -90,6 +90,10 @@ system-config-firewall
 ########################################################################
 
 %post --nochroot
+# Increase the overlay size to 1GB instead of the default 512MB
+# This will also allow to easily modify the size during the boot
+sed -i 's/^  append initrd.*/& rd.live.overlay.size=1024/' $LIVE_ROOT/isolinux/isolinux.cfg
+
 cp -r oVirtLiveFiles $INSTALL_ROOT/root/
 %end
 
