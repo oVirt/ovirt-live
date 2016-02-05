@@ -1,6 +1,6 @@
 #
 # ovirt-engine-setup -- oVirt Live
-# Copyright (C) 2013-2015 Red Hat, Inc.
+# Copyright (C) 2013-2016 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,20 +20,16 @@
 oVirt Live plugin.
 """
 
-import time
+import glob
 import os
 import shutil
-import glob
-import gettext
-_ = lambda m: gettext.dgettext(message=m, domain='ovirt-engine-setup')
+import time
 
-
-from otopi import util
 from otopi import plugin
+from otopi import util
 
-
-from ovirt_engine_setup import util as osetuputil
 from ovirt_engine_setup import constants as osetupcons
+from ovirt_engine_setup import util as osetuputil
 from ovirt_engine_setup.engine import constants as oenginecons
 from ovirt_engine_setup.engine_common import constants as oengcommcon
 
