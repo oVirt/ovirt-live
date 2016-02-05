@@ -108,7 +108,6 @@ cp -r oVirtLiveFiles $INSTALL_ROOT/root
 %post
 mkdir -p /home/oVirtuser
 cp -r /root/oVirtLiveFiles /home/oVirtuser
-# gsettings set org.gnome.desktop.background picture-uri 'file:////home/oVirtuser/oVirtLiveFiles/ovirt-wallpaper-16:9.jpg'
 rm -rf /root/oVirtLiveFiles
 chmod o+x /home/oVirtuser/oVirtLiveFiles/engine-setup-yad.sh
 chown -R oVirtuser:oVirtuser /home/oVirtuser
@@ -122,11 +121,6 @@ done
 sed -i 's/\[daemon\]/\[daemon\]\nAutomaticLoginEnable\=True\nAutomaticLogin\=oVirtuser/g' /etc/gdm/custom.conf
 
 echo '10.0.0.1 ovirtlive.localdomain localdomain' >> /etc/hosts
-
-# Setting wallapaper
-cp /home/oVirtuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg /usr/share/backgrounds/spherical-cow/default/standard/spherical-cow.png
-cp /home/oVirtuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg /usr/share/backgrounds/spherical-cow/default/wide/spherical-cow.png
-cp /home/oVirtuser/oVirtLiveFiles/images/ovirt-wallpaper-16:9.jpg /usr/share/backgrounds/spherical-cow/default/normalish/spherical-cow.png
 
 # Link setup in autostart
 ln -s /usr/share/applications/engine-setup.desktop ~oVirtuser/.config/autostart/engine-setup.desktop

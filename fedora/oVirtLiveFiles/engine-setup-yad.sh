@@ -1,5 +1,6 @@
 #! /bin/bash
-# TODO
+
+gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/oVirtLive/default/oVirtLive.xml"
 
 if ! ifconfig ovirtmgmt 2> /dev/null | grep -q 'inet addr'; then
     # network wasn't correctly configured. Attempt to configure.
@@ -11,13 +12,15 @@ if ! ifconfig ovirtmgmt 2> /dev/null | grep -q 'inet addr'; then
     sudo brctl addif ovirtmgmt dummy0 > /dev/null 2>&1
 fi
 
+sudo exportfs -r
+sudo systemctl restart nfs-server
+
 action=$(yad --entry \
     --title "oVirt installation" \
     --text  "oVirt allInOne is going to be installed\nChoose which option you would like to install\nINFO: all passwords on the live system are: \"ovirt\"" \
     --on-top \
     --center\
-    --text-align=center \
-    --image=$HOME/oVirtLiveFiles/images/ovirt-usb-stick.svg \
+    --image=/usr/share/pixmaps/oVirtLive/ovirt-usb-stick.svg \
     --skip-taskbar \
     --image-on-top \
     --listen \
@@ -44,7 +47,10 @@ echo "Excecuting $cmd"
 if $cmd; then
     echo "Setup ended successfully"
     rm -f $HOME/.config/autostart/engine-setup.desktop
-    yad --text "Setup ended successfully\nopening oVirt now on https://localhost.localdomain" --button="gtk-ok:0"
-    firefox https://localhost.localdomain &
+    . /usr/share/ovirt-engine/bin/engine-prolog.sh
+    yad --text "Setup ended successfully\nopening oVirt now on https://${ENGINE_FQDN}" --button="gtk-ok:0"
+    firefox -CreateProfile default
+    certutil -A -n oVirt-Live -t 'TCu,Cuw,Tuw' -i /etc/pki/ovirt-engine/ca.pem -d ~/.mozilla/firefox/*.default
+    firefox https://${ENGINE_FQDN} &
     exit 0
 fi

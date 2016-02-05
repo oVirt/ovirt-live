@@ -20,7 +20,7 @@ action=$(yad --entry \
     --text  "oVirt allInOne is going to be installed\nChoose which option you would like to install\nINFO: all passwords on the live system are: \"ovirt\"" \
     --on-top \
     --center\
-    --image=$HOME/oVirtLiveFiles/images/ovirt-usb-stick.svg \
+    --image=/usr/share/pixmaps/oVirtLive/ovirt-usb-stick.svg \
     --skip-taskbar \
     --image-on-top \
     --listen \
