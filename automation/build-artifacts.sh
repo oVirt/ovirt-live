@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-SUFFIX=".git$(git rev-parse --short HEAD)"
+SUFFIX=".$(date -u +%Y%m%d%H%M%S).git$(git rev-parse --short HEAD)"
 
 # remove any previous artifacts
 rm -rf output
