@@ -18,13 +18,15 @@
 # See: https://fedoraproject.org/wiki/Changes/UnversionedDocdirs
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
+%global         package_version @PACKAGE_VERSION@
+
 Name:           @PACKAGE_NAME@
 Version:        @PACKAGE_RPM_VERSION@
 Release:        @PACKAGE_RPM_RELEASE@%{?release_suffix}%{?dist}
 Summary:        oVirt Live Setup Plugins
 License:        ASL 2.0
 URL:            http://www.ovirt.org
-Source0:        http://resources.ovirt.org/pub/ovirt-master-snapshot/src/%{name}/%{name}-%{version}.tar.gz
+Source0:        http://resources.ovirt.org/pub/ovirt-master-snapshot/src/%{name}/%{name}-%{package_version}.tar.gz
 BuildArch:      noarch
 
 Requires:       ovirt-engine >= %{version}
@@ -39,7 +41,7 @@ Requires:       ovirt-host-deploy >= 1.5.0
 oVirt Live Setup Plugins
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{package_version}
 
 %build
 %configure \
