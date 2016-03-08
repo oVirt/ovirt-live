@@ -31,7 +31,7 @@ BuildArch:      noarch
 
 Requires:       ovirt-engine >= %{version}
 Requires:       ovirt-engine-setup-plugin-ovirt-engine >= %{version}
-Requires:       python-ovirt-engine-sdk4 >= 4.0.0
+Requires:       ovirt-engine-sdk-python >= 3.6.3.0
 
 Requires:       gettext
 Requires:       openssh-server

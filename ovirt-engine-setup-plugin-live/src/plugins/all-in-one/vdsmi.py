@@ -264,8 +264,8 @@ class Plugin(plugin.PluginBase):
         engine_api.clusters.add(
             self._ovirtsdk_xml.params.Cluster(
                 name=self.environment[oliveconst.CoreEnv.LOCAL_CLUSTER],
-                cpu=self._ovirtsdk_xml.params.Cpu(
-                    type_=self.environment[oliveconst.CoreEnv.VDSM_CPU]
+                cpu=self._ovirtsdk_xml.params.CPU(
+                    id=self.environment[oliveconst.CoreEnv.VDSM_CPU]
                 ),
                 data_center=self._ovirtsdk_xml.params.DataCenter(
                     name=self.environment[oliveconst.CoreEnv.LOCAL_DATA_CENTER]
@@ -280,11 +280,12 @@ class Plugin(plugin.PluginBase):
             self._ovirtsdk_xml.params.Host(
                 name=self.environment[oliveconst.CoreEnv.LOCAL_HOST],
                 address=self.environment[osetupcons.ConfigEnv.FQDN],
+                reboot_after_installation=False,
                 override_iptables=False,
                 cluster=self._ovirtsdk_xml.params.Cluster(
                     name=self.environment[oliveconst.CoreEnv.LOCAL_CLUSTER]
                 ),
-                ssh=self._ovirtsdk_xml.params.Ssh(
+                ssh=self._ovirtsdk_xml.params.SSH(
                     authentication_method='publickey',
                     port=self.environment[oliveconst.CoreEnv.SSHD_PORT],
                 ),
@@ -300,7 +301,7 @@ class Plugin(plugin.PluginBase):
             ))
         else:
             self.logger.debug('Adding local storage domain')
-            storage = self._ovirtsdk_xml.params.HostStorage(
+            storage = self._ovirtsdk_xml.params.Storage(
                 path=self.environment[
                     oliveconst.CoreEnv.STORAGE_DOMAIN_DIR
                 ].rstrip('/'),

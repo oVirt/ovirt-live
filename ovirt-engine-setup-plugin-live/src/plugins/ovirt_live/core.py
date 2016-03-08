@@ -109,18 +109,16 @@ class Plugin(plugin.PluginBase):
         ),
     )
     def _createstorage(self):
+        params = self._ovirtsdk_xml.params
         self.logger.debug('Attaching iso domain')
         time.sleep(10)
+        sd = self._engine_api.storagedomains.get(
+            self.environment[oliveconst.IsoEnv.ISO_NAME]
+        )
         self._engine_api.datacenters.get(
-            self.environment[
-                oliveconst.CoreEnv.LOCAL_DATA_CENTER
-            ]
+            self.environment[oliveconst.CoreEnv.LOCAL_DATA_CENTER]
         ).storagedomains.add(
-            self._engine_api.storagedomains.get(
-                self.environment[
-                    oliveconst.IsoEnv.ISO_NAME
-                ]
-            )
+            params.StorageDomain(id=sd.get_id())
         )
 
     @plugin.event(
@@ -178,15 +176,14 @@ class Plugin(plugin.PluginBase):
         GB = 1024 * MB
 
         vm = self._engine_api.vms.add(
-            params.Vm(
+            params.VM(
                 name='local_vm',
                 memory=1 * GB,
                 os=params.OperatingSystem(
                     type_='unassigned',
-                    boot=params.Boot(
-                        devices=params.devicesType(
-                            device=['cdrom', 'hd'],
-                        )
+                    boot=(
+                        params.Boot(dev='cdrom'),
+                        params.Boot(dev='hd'),
                     ),
                 ),
                 cluster=self._engine_api.clusters.get('local_cluster'),
@@ -195,21 +192,24 @@ class Plugin(plugin.PluginBase):
         )
 
         vm.nics.add(
-            params.Nic(
+            params.NIC(
                 name='eth0',
                 network=params.Network(name='ovirtmgmt'),
                 interface='virtio',
             ),
         )
 
+        sd = self._engine_api.storagedomains.get('local_storage')
         vm.disks.add(
             params.Disk(
                 storage_domains=params.StorageDomains(
                     storage_domain=(
-                        self._engine_api.storagedomains.get('local_storage'),
+                        params.StorageDomain(id=sd.get_id()),
+
                     ),
                 ),
-                provisioned_size=6 * GB,
+                size=6 * GB,
+                type_='data',
                 interface='virtio',
                 format='cow',
                 bootable=True,
