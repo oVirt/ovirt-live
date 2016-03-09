@@ -20,13 +20,12 @@
 AIO cpu check plugin.
 """
 import gettext
-import sys
 
 from otopi import plugin, util
 
 from ovirt_engine_setup.ovirt_live import constants as oliveconst
 
-from vdsm import cpuinfo
+from vdsm import machinetype
 
 
 def _(m):
@@ -82,24 +81,6 @@ class Plugin(plugin.PluginBase):
 
         return ret
 
-    def _getCompatibleCpuModels(self):
-        self.logger.debug('Attempting to load the caps vdsm module')
-        savedPath = sys.path
-        ret = None
-        try:
-            sys.path.append(oliveconst.FileLocations.AIO_VDSM_PATH)
-            caps = util.loadModule(
-                path=oliveconst.FileLocations.AIO_VDSM_PATH,
-                name='caps',
-            )
-            ret = (
-                cpuinfo.model(),
-                caps._getCompatibleCpuModels(),
-            )
-        finally:
-            sys.path = savedPath
-        return ret
-
     @plugin.event(
         stage=plugin.Stages.STAGE_INIT,
     )
@@ -131,7 +112,7 @@ class Plugin(plugin.PluginBase):
     def _validation(self):
         shouldStopLibvirt = self._startLibvirt()
         try:
-            cpu, compatible = self._getCompatibleCpuModels()
+            compatible = machinetype.compatible_cpu_models()
             self.logger.debug(
                 'Compatible CPU models are: %s',
                 compatible,

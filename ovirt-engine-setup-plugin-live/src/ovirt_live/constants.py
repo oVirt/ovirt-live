@@ -35,10 +35,6 @@ class FileLocations(object):
     DATADIR = '/usr/share'
     LOCALSTATEDIR = '/var'
 
-    AIO_VDSM_PATH = os.path.join(
-        DATADIR,
-        'vdsm',
-    )
     AIO_STORAGE_DOMAIN_DEFAULT_DIR = os.path.join(
         LOCALSTATEDIR,
         'lib',
