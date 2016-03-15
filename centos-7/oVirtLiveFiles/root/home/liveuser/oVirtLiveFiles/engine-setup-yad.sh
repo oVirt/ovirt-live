@@ -1,6 +1,12 @@
 #! /bin/bash
 
 gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/oVirtLive/default/oVirtLive.xml"
+gsettings set org.gnome.desktop.screensaver idle-activation-enabled false
+gsettings set org.gnome.settings-daemon.plugins.power active false
+gsettings set org.gnome.settings-daemon.plugins.power idle-dim false
+gsettings set org.gnome.desktop.session idle-delay 0
+xset s 0 0
+xset s off
 
 if ! ifconfig ovirtmgmt 2> /dev/null | grep -q 'inet addr'; then
     # network wasn't correctly configured. Attempt to configure.
