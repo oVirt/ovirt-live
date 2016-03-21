@@ -51,8 +51,14 @@ esac
 
 echo "Excecuting $cmd"
 if $cmd; then
-    echo "Setup ended successfully"
+    echo "Setup ended successfully."
     rm -f $HOME/.config/autostart/engine-setup.desktop
+    echo "Disabling auto-logout from WebAdmin portal."
+    sudo engine-config -s UserSessionTimeOutInterval=-1
+    sudo ovirt-aaa-jdbc-tool settings set --name MAX_LOGIN_MINUTES --value -1
+    echo "Restarting the engine..."
+    sudo systemctl restart ovirt-engine
+    sleep 10
     . /usr/share/ovirt-engine/bin/engine-prolog.sh
     yad --text "Setup ended successfully\nopening oVirt now on https://${ENGINE_FQDN}" --button="gtk-ok:0"
     firefox -CreateProfile default
