@@ -194,7 +194,6 @@ class Plugin(plugin.PluginBase):
             oliveconst.CoreEnv.CONFIGURE
         ],
         after=(
-            oliveconst.Stages.AIO_CONFIG_STORAGE,
             oliveconst.Stages.AIO_CONFIG_SSH,
             oengcommcons.Stages.CORE_ENGINE_START,
             oengcommcons.Stages.APACHE_RESTART,
