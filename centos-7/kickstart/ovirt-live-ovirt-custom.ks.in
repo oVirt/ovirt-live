@@ -14,9 +14,12 @@ rootpw  ovirt
 repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot/rpm/el7/
 repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot-static/rpm/el7/
 #repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-4.0_alpha1/rpm/el7/
+
+# Dependencies
 repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-7-x86_64/
-repo --name=gluster --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-7/x86_64/
-repo --name=glusternoarch --baseurl=http://download.gluster.org/pub/gluster/glusterfs/LATEST/EPEL.repo/epel-7/noarch
+repo --name=centos-virt-sig-ovirt40 --baseurl=http://cbs.centos.org/repos/virt7-ovirt-40-candidate/x86_64/os/
+repo --name=centos-storage-sig-gluster37 --baseurl=http://mirror.centos.org/centos/7/storage/x86_64/gluster-3.7/
+
 
 ########################################################################
 # Include kickstart files
