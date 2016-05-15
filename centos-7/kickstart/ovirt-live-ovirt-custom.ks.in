@@ -132,4 +132,9 @@ sed -i 's/pc-0.14/rhel6.5.0/' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgr
 
 echo "alias dummy0 dummy" >> /etc/modprobe.d/dummy.conf
 
+echo -e '\n#Virt Viewer\napplication/x-virt-viewer\t\t\tvv' >> /etc/mime.types
+
+echo '[Default Applications]' >> /home/liveuser/.config/mimeapps.list
+echo 'application/x-virt-viewer=remote-viewer.desktop;' >> /home/liveuser/.config/mimeapps.list
+
 %end
