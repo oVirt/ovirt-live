@@ -11,8 +11,8 @@ device xhci-hcd
 rootpw  ovirt
 
 # oVirt repositories
-repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot/rpm/el7/
-#repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot-static/rpm/el7/
+repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-4.0-snapshot/rpm/el7/
+#repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-4.0-snapshot-static/rpm/el7/
 repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-4.0_beta1/rpm/el7/
 
 # Dependencies
