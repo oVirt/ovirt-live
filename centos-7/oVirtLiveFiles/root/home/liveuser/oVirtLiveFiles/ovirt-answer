@@ -1,3 +1,5 @@
+[environment:init]
+DIALOG/autoAcceptDefault=bool:True
 [environment:default]
 OSETUP_RPMDISTRO/enableUpgrade=bool:False
 OVESETUP_CORE/engineStop=none:None
