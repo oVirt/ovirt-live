@@ -141,4 +141,6 @@ echo -e '\n#Virt Viewer\napplication/x-virt-viewer\t\t\tvv' >> /etc/mime.types
 echo '[Default Applications]' >> /home/liveuser/.config/mimeapps.list
 echo 'application/x-virt-viewer=remote-viewer.desktop;' >> /home/liveuser/.config/mimeapps.list
 
+rm -rf /usr/share/ovirt-host-deploy/plugins/ovirt-host-deploy/kernel
+
 %end
