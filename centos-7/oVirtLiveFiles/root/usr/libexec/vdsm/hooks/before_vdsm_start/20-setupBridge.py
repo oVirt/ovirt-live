@@ -2,7 +2,7 @@
 
 import sys
 sys.path.append('/usr/share/vdsm/')
-from network import api
+from vdsm.network import api
 import logging
 
 FORMAT = '%(asctime)-15s::%(message)s'
@@ -26,7 +26,7 @@ res = api.setupNetworks(
         }
     },
     {},
-    **NOCHK
+    NOCHK
 )
 logging.debug('setupNetworks: %s', res)
 
