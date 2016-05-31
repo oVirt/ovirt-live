@@ -1,6 +1,8 @@
 autoconf
 automake
 gettext-devel
+git
 make
 pyflakes
 python-pep8
+yum-utils

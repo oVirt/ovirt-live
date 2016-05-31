@@ -13,3 +13,4 @@ done
 pyflakes `find centos-7 -name "*.py"`
 pep8 `find centos-7 -name "*.py"`
 
+./automation/build-artifacts.sh

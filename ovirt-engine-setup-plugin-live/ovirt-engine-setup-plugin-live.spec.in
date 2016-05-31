@@ -26,7 +26,7 @@ Release:        @PACKAGE_RPM_RELEASE@%{?release_suffix}%{?dist}
 Summary:        oVirt Live Setup Plugins
 License:        ASL 2.0
 URL:            http://www.ovirt.org
-Source0:        http://resources.ovirt.org/pub/ovirt-4.0-snapshot/src/%{name}/%{name}-%{package_version}.tar.gz
+Source0:        http://resources.ovirt.org/pub/src/%{name}/%{name}-%{package_version}.tar.gz
 BuildArch:      noarch
 
 Requires:       ovirt-engine >= %{version}
@@ -67,6 +67,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Tue May 31 2016 Sandro Bonazzola <sbonazzo@redhat.com> - 4.0.0-1
+- 4.0.0-1
+
 * Wed Dec 23 2015 Sandro Bonazzola <sbonazzo@redhat.com> - 4.0.0-0.0.master
 - Bump version to 4.0.0
 

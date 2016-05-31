@@ -24,7 +24,7 @@ Release:        @PACKAGE_RPM_RELEASE@%{?release_suffix}%{?dist}
 Summary:        oVirt Live Artworks
 License:        ASL 2.0
 URL:            http://www.ovirt.org
-Source0:        http://resources.ovirt.org/pub/ovirt-4.0-snapshot/src/%{name}/%{name}-%{package_version}.tar.gz
+Source0:        http://resources.ovirt.org/pub/src/%{name}/%{name}-%{package_version}.tar.gz
 BuildArch:      noarch
 
 %description
@@ -86,5 +86,8 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Tue May 31 2016 Sandro Bonazzola <sbonazzo@redhat.com> - 1.1.0-1
+- 1.1.0-1
+
 * Fri Jul 17 2015 Sandro Bonazzola <sbonazzo@redhat.com> - 1.0.0-0.0.master
 - Initial packaging
