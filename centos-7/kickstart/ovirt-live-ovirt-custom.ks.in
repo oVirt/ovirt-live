@@ -133,6 +133,8 @@ chmod 664 /etc/sysconfig/network-scripts/{ifcfg,route,rule}*
 
 sed -i 's/pc-0.14/rhel6.5.0/' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql
 
+sed -i 's,dirs\t/var/lib/nfs\n,,g' /etc/rwtab
+echo -e 'files\t/var/lib/nfs' >> /etc/rwtab
 
 echo "alias dummy0 dummy" >> /etc/modprobe.d/dummy.conf
 
