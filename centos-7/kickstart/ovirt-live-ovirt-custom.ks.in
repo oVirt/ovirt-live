@@ -11,9 +11,11 @@ device xhci-hcd
 rootpw  ovirt
 
 # oVirt repositories
-repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-4.0-snapshot/rpm/el7/
+#repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-4.0-snapshot/rpm/el7/
 #repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-4.0-snapshot-static/rpm/el7/
-repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-4.0_beta1/rpm/el7/
+repo --name=ovirt-pre --baseurl=http://resources.ovirt.org/pub/ovirt-4.0-pre/rpm/el7/
+repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-4.0/rpm/el7/
+
 
 # Dependencies
 repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-7-x86_64/
