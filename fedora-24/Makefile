@@ -39,7 +39,7 @@ packages:
 		dnf install -y fedora-kickstarts
 
 kickstart/fedora-live-workstation.ks: packages
-	cp -l \
+	ln -s \
 		/usr/share/spin-kickstarts/fedora-live-base.ks \
 		/usr/share/spin-kickstarts/fedora-live-workstation.ks \
 		/usr/share/spin-kickstarts/fedora-workstation-packages.ks \
@@ -47,7 +47,7 @@ kickstart/fedora-live-workstation.ks: packages
 		/usr/share/spin-kickstarts/fedora-repo-not-rawhide.ks \
 		kickstart/
 	mkdir -p kickstart/snippets
-	cp -l \
+	ln -s \
 		/usr/share/spin-kickstarts/snippets/packagekit-cached-metadata.ks \
 		kickstart/snippets/
 
