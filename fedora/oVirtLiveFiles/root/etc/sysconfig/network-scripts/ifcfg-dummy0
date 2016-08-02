@@ -1,8 +1,0 @@
-DEVICE=dummy0
-BOOTPROTO=none
-ONBOOT=yes
-HOTPLUG=no
-NM_CONTROLLED=no
-BRIDGE=ovirtmgmt
-PROMISC=yes
-
