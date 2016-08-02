@@ -1,9 +1,11 @@
 #!/usr/bin/python
 
-import sys
-sys.path.append('/usr/share/vdsm/')
-from vdsm.network import api
 import logging
+import sys
+
+from vdsm.network import api
+
+sys.path.append('/usr/share/vdsm/')
 
 FORMAT = '%(asctime)-15s::%(message)s'
 logging.basicConfig(
