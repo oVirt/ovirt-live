@@ -48,6 +48,14 @@ wireless-tools
 system-config-keyboard
 system-config-firewall
 
+# Comply with Fedora Generic
+generic-release
+generic-logos
+generic-logos-httpd
+-fedora-release
+-fedora-logos
+-fedora-logos-httpd
+
 # Saving space
 -avahi
 -bind-utils
