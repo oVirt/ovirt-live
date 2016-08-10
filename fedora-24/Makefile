@@ -10,6 +10,8 @@ clean:
 	rm -fr *.tmp
 	rm -f kickstart/ovirt-live-ovirt-custom.ks
 	rm -rf oVirtLiveFiles/iso
+	rm -rf kickstart/snippets
+	rm -f kickstart/fedora-*.ks
 
 dist-clean:	clean
 
