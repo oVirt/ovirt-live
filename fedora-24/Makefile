@@ -35,8 +35,12 @@ downloads/TinyCore-current.iso:
 	$(MAKE) _download URL="http://distro.ibiblio.org/tinycorelinux/7.x/x86/release/TinyCore-current.iso" OUT="TinyCore-current.iso"
 
 packages:
-	rpm -ql livecd-tools > /dev/null 2>&1 || \
-		dnf install -y livecd-tools python-imgcreate hfsplus-tools
+	rpm -ql lorax > /dev/null 2>&1 || \
+		dnf install -y lorax
+	rpm -ql lorax-lmc-novirt > /dev/null 2>&1 || \
+		dnf install -y lorax-lmc-novirt
+	rpm -ql lorax-templates-generic > /dev/null 2>&1 || \
+		dnf install -y lorax-templates-generic
 	rpm -ql fedora-kickstarts  > /dev/null 2>&1 || \
 		dnf install -y fedora-kickstarts
 
@@ -67,4 +71,4 @@ livecd:		\
 		$(NULL)
 	mkdir -p oVirtLiveFiles/iso
 	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
-	livecd-creator -d -v -p --config=kickstart/ovirt-live-ovirt-custom.ks --fslabel=ovirt-live-master-fc.$(shell date -u +%y%m%d%H) 2>&1 | tee iso.log
+	livemedia-creator --make-iso --no-virt --releasever=24 --ks kickstart/ovirt-live-ovirt-custom.ks --fs-label ovirt-live-master-fc.$(shell date -u +%y%m%d%H) 2>&1 | tee iso.log
