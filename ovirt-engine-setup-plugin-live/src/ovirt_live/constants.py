@@ -23,6 +23,7 @@ import gettext
 import os
 
 from otopi import util
+
 from ovirt_engine_setup import constants as osetupcons
 
 

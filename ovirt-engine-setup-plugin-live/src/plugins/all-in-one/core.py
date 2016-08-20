@@ -24,15 +24,16 @@ AIO plugin.
 import gettext
 
 from otopi import constants as otopicons
-from otopi import filetransaction, plugin, util
-
-from ovirt_setup_lib import dialog
+from otopi import filetransaction
+from otopi import plugin
+from otopi import util
 
 from ovirt_engine_setup import constants as osetupcons
 from ovirt_engine_setup.engine import constants as oenginecons
 from ovirt_engine_setup.engine_common import constants as oengcommcons
-
 from ovirt_engine_setup.ovirt_live import constants as oliveconst
+
+from ovirt_setup_lib import dialog
 
 
 def _(m):

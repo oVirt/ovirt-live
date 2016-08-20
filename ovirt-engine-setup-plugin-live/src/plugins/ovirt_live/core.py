@@ -33,7 +33,6 @@ from ovirt_engine_setup import constants as osetupcons
 from ovirt_engine_setup import util as osetuputil
 from ovirt_engine_setup.engine import constants as oenginecons
 from ovirt_engine_setup.engine_common import constants as oengcommcon
-
 from ovirt_engine_setup.ovirt_live import constants as oliveconst
 
 

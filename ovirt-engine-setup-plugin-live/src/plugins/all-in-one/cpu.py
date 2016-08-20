@@ -21,11 +21,12 @@ AIO cpu check plugin.
 """
 import gettext
 
-from otopi import plugin, util
-
-from ovirt_engine_setup.ovirt_live import constants as oliveconst
+from otopi import plugin
+from otopi import util
 
 from vdsm import machinetype
+
+from ovirt_engine_setup.ovirt_live import constants as oliveconst
 
 
 def _(m):

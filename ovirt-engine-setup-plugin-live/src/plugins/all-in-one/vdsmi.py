@@ -24,7 +24,8 @@ import distutils.version
 import gettext
 import time
 
-from otopi import plugin, util
+from otopi import plugin
+from otopi import util
 
 from vdsm import dsaversion
 
@@ -33,7 +34,6 @@ from ovirt_engine_setup import constants as osetupcons
 from ovirt_engine_setup.engine import constants as oenginecons
 from ovirt_engine_setup.engine import vdcoption
 from ovirt_engine_setup.engine_common import constants as oengcommcons
-
 from ovirt_engine_setup.ovirt_live import constants as oliveconst
 
 
