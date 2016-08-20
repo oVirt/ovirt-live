@@ -1,0 +1,7 @@
+autoconf
+automake
+gettext-devel
+make
+pyflakes
+python-isort
+python-pep8
