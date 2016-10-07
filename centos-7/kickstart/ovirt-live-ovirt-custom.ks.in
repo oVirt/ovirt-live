@@ -18,7 +18,7 @@ repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-master-sn
 repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-7-x86_64/
 repo --name=centos-virt-sig-ovirt41 --baseurl=http://cbs.centos.org/repos/virt7-ovirt-41-candidate/x86_64/os/
 repo --name=centos-storage-sig-gluster38 --baseurl=http://mirror.centos.org/centos/7/storage/x86_64/gluster-3.8/
-
+repo --name=centos-opstools-sig --baseurl=http://buildlogs.centos.org/centos/7/opstools/x86_64/
 
 ########################################################################
 # Include kickstart files
@@ -36,6 +36,10 @@ repo --name=centos-storage-sig-gluster38 --baseurl=http://mirror.centos.org/cent
 ovirt-engine-setup-plugin-live
 ovirt-log-collector
 iptables-services
+
+# Metrics
+fluentd
+collectd
 
 # oVirt Host Deploy requirements
 ovirt-hosted-engine-setup
