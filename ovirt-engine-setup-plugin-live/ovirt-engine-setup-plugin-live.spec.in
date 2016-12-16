@@ -59,7 +59,7 @@ make %{?_smp_mflags}
 %{_datadir}/ovirt-engine/setup/plugins/ovirt-engine-setup/ovirt-engine/ovirt_live/
 %config %{_sysconfdir}/ovirt-host-deploy.conf.d/10-packaging-aio.conf
 %config %{_sysconfdir}/ovirt-host-deploy.conf.d/50-offline-packager.conf
-
+%{_pkgdocdir}/*
 
 %doc README.md
 # See https://fedoraproject.org/wiki/Changes/Use_license_macro_in_RPMs_for_packages_in_Cloud_Image

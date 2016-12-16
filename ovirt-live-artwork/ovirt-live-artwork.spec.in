@@ -71,6 +71,7 @@ make %{?_smp_mflags}
 %{_datadir}/backgrounds/oVirtLive/default/wide
 %{_datadir}/backgrounds/oVirtLive/default/tv-wide
 %{_datadir}/backgrounds/oVirtLive/default/oVirtLive.xml
+%{_pkgdocdir}/*
 
 %files gnome
 %doc README.md
