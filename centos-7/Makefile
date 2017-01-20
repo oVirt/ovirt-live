@@ -52,4 +52,4 @@ livecd:		\
 		$(NULL)
 	mkdir -p oVirtLiveFiles/iso
 	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
-	livecd-creator -d -v -p --config=kickstart/ovirt-live-ovirt-custom.ks --fslabel=ovirt-live-4.1_beta2 2>&1 | tee iso.log
+	livecd-creator -d -v -p --config=kickstart/ovirt-live-ovirt-custom.ks --fslabel=ovirt-live-4.1_rc1 2>&1 | tee iso.log

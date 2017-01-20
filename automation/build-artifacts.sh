@@ -1,6 +1,5 @@
 #!/bin/bash -xe
 
-SUFFIX=".$(date -u +%Y%m%d%H%M%S).git$(git rev-parse --short HEAD)"
 
 # remove any previous artifacts
 rm -rf output
@@ -22,7 +21,6 @@ do
     rpmbuild \
         -D "_srcrpmdir $PWD/output" \
         -D "_topmdir $PWD/rpmbuild" \
-        -D "release_suffix ${SUFFIX}" \
         -ts "${package}"-*.tar.gz
 
     # install any build requirements
@@ -32,7 +30,6 @@ do
     rpmbuild \
         -D "_rpmdir $PWD/output" \
         -D "_topmdir $PWD/rpmbuild" \
-        -D "release_suffix ${SUFFIX}" \
         --rebuild output/"${package}"-*src.rpm
 done
 
