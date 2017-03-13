@@ -1,4 +1,4 @@
-DEVICE=dummy0
+DEVICE=dummy_0
 BRIDGE=ovirtmgmt
 ONBOOT=yes
 MTU=1500

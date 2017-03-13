@@ -139,7 +139,7 @@ sed -i 's/pc-0.14/rhel6.5.0/' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgr
 sed -i 's,dirs\t/var/lib/nfs\n,,g' /etc/rwtab
 echo -e 'files\t/var/lib/nfs' >> /etc/rwtab
 
-echo "alias dummy0 dummy" >> /etc/modprobe.d/dummy.conf
+echo "options dummy numdummies=0" >> /etc/modprobe.d/dummy.conf
 
 echo -e '\n#Virt Viewer\napplication/x-virt-viewer\t\t\tvv' >> /etc/mime.types
 
