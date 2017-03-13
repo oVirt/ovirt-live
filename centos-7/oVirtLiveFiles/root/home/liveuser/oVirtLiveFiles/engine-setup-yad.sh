@@ -12,10 +12,11 @@ if ! ifconfig ovirtmgmt 2> /dev/null | grep -q 'inet addr'; then
     # network wasn't correctly configured. Attempt to configure.
     # Probably left over workaround from earlier releases.
     # TODO - drop this if not needed
-    sudo ifconfig dummy0 10.0.0.1 netmask 255.255.255.0 > /dev/null 2>&1
+    sudo ip link add name dummy_0 type dummy
+    sudo ifconfig dummy_0 10.0.0.1 netmask 255.255.255.0 > /dev/null 2>&1
     sudo ifup ovirtmgmt > /dev/null 2>&1
     sudo brctl addbr ovirtmgmt > /dev/null 2>&1
-    sudo brctl addif ovirtmgmt dummy0 > /dev/null 2>&1
+    sudo brctl addif ovirtmgmt dummy_0 > /dev/null 2>&1
 fi
 
 action=$(yad --entry \
