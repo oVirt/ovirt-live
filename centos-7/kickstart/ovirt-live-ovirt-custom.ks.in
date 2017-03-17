@@ -15,10 +15,13 @@ repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot
 repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot-static/rpm/el7/
 
 # Dependencies
-repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/epel-7-x86_64/
-repo --name=centos-virt-sig-ovirt41 --baseurl=http://cbs.centos.org/repos/virt7-ovirt-41-candidate/x86_64/os/
-repo --name=centos-storage-sig-gluster38 --baseurl=http://mirror.centos.org/centos/7/storage/x86_64/gluster-3.8/
-repo --name=centos-opstools-sig --baseurl=http://buildlogs.centos.org/centos/7/opstools/x86_64/
+repo --name=ovirt-master-centos-gluster310 --baseurl=http://mirror.centos.org/centos/7/storage/$basearch/gluster-3.10/
+repo --name=ovirt-master-virtio-win-stable --baseurl=http://fedorapeople.org/groups/virt/virtio-win/repo/stable
+repo --name=centos-qemu-ev-release --baseurl=http://mirror.centos.org/centos/7/virt/$basearch/kvm-common/
+repo --name=centos-ovirt42-testing --baseurl=http://cbs.centos.org/repos/virt7-ovirt-42-testing/$basearch/os/
+repo --name=centos-ovirt-common-testing --baseurl=http://cbs.centos.org/repos/virt7-ovirt-common-testing/$basearch/os/
+repo --name=centos-opstools-testing --baseurl=http://buildlogs.centos.org/centos/7/opstools/$basearch/
+repo --name=rnachimu-gdeploy --baseurl=https://copr-be.cloud.fedoraproject.org/results/rnachimu/gdeploy/epel-7-$basearch/
 
 ########################################################################
 # Include kickstart files
