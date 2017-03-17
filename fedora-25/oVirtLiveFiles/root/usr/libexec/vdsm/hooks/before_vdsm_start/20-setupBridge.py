@@ -16,7 +16,7 @@ logging.basicConfig(
 
 NOCHK = {'connectivityCheck': False}
 NET = 'ovirtmgmt'
-NIC = 'dummy0'
+NIC = 'dummy_0'
 
 res = api.setupNetworks(
     {

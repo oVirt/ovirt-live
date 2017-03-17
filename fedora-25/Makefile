@@ -71,4 +71,4 @@ livecd:		\
 		$(NULL)
 	mkdir -p oVirtLiveFiles/iso
 	cp downloads/TinyCore-current.iso oVirtLiveFiles/iso/
-	livemedia-creator --make-iso --no-virt --releasever=24 --ks kickstart/ovirt-live-ovirt-custom.ks --resultdir `pwd`/output/ --fs-label ovirt-live-master-fc.$(shell date -u +%y%m%d%H) 2>&1 | tee iso.log
+	livemedia-creator --make-iso --no-virt --releasever=25 --ks kickstart/ovirt-live-ovirt-custom.ks --resultdir `pwd`/output/ --fs-label ovirt-live-master-fc.$(shell date -u +%y%m%d%H) 2>&1 | tee iso.log

@@ -11,11 +11,13 @@ device xhci-hcd
 rootpw  ovirt
 
 # oVirt repositories
-repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot/rpm/fc24/
-repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot-static/rpm/fc24/
+repo --name=ovirt --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot/rpm/fc25/
+repo --name=ovirtstatic --baseurl=http://resources.ovirt.org/pub/ovirt-master-snapshot-static/rpm/fc25/
 
 # Dependencies
-repo --name=patternfly --baseurl=http://copr-be.cloud.fedoraproject.org/results/patternfly/patternfly1/fedora-24-x86_64/
+repo --name=ovirt-master-virtio-win-stable --baseurl=http://fedorapeople.org/groups/virt/virtio-win/repo/stable
+repo --name=ovirt-master-fedora-virt-preview --baseurl=http://fedorapeople.org/groups/virt/virt-preview/fedora-$releasever/$basearch
+repo --name=rnachimu-gdeploy --baseurl=https://copr-be.cloud.fedoraproject.org/results/rnachimu/gdeploy/fedora-$releasever-$basearch/
 
 ########################################################################
 # Include kickstart files
@@ -136,7 +138,7 @@ sed -i 's/pc-0.14/rhel6.5.0/' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgr
 sed -i 's,dirs\t/var/lib/nfs\n,,g' /etc/rwtab
 echo -e 'files\t/var/lib/nfs' >> /etc/rwtab
 
-echo "alias dummy0 dummy" >> /etc/modprobe.d/dummy.conf
+echo "options dummy numdummies=0" >> /etc/modprobe.d/dummy.conf
 
 echo -e '\n#Virt Viewer\napplication/x-virt-viewer\t\t\tvv' >> /etc/mime.types
 
