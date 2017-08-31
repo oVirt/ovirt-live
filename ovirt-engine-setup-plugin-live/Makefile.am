@@ -45,6 +45,7 @@ SUBDIRS = \
 dist_noinst_DATA = \
 	ovirt-engine-setup-plugin-live.spec \
 	NOTICE \
+	.isort.cfg \
 	$(NULL)
 
 dist_doc_DATA = \
