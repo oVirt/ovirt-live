@@ -27,7 +27,7 @@ import time
 from otopi import plugin
 from otopi import util
 
-from vdsm import dsaversion
+from vdsm.common import dsaversion
 
 from ovirt_engine_setup import config as osetupconfig
 from ovirt_engine_setup import constants as osetupcons
