@@ -1,15 +1,9 @@
 #!/bin/bash -xe
 
-for package in ovirt-live-artwork ovirt-engine-setup-plugin-live
-do
-    pushd ${package}
-    autoreconf -ivf
-    ./configure
-    make distcheck
-    popd
-done
+pushd ovirt-live-artwork
+autoreconf -ivf
+./configure
+make distcheck
+popd
 
-# check python code on centos-7, skipping fedora for now
-pyflakes `find centos-7 -name "*.py"`
-pep8 `find centos-7 -name "*.py"`
-
+automation/build-artifacts.sh
