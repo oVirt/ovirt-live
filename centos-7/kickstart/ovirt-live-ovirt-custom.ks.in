@@ -63,8 +63,8 @@ qemu-kvm-ev
 # oVirt Live scripts
 yad
 spice-xpi
-# ovirt-live-artwork
-# ovirt-live-artwork-gnome
+ovirt-live-artwork
+ovirt-live-artwork-gnome
 
 # Useful tools
 wireless-tools
